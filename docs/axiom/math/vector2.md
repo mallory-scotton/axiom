@@ -99,4 +99,6 @@
 |[operator[]](./vector2/operators/op[].md)|...|
 |[operator++](./vector2/operators/op++.md)|...|
 |[operator--](./vector2/operators/op--.md)|...|
+|[operator^](./vector2/operators/op^.md)|...|
+|[operator\|](./vector2/operators/op\|.md)|...|
 |[operator<<](./vector2/operators/op<<.md)|...|
