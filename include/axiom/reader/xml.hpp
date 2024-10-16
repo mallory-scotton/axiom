@@ -30,9 +30,14 @@
 #pragma once
 
 ///////////////////////////////////////////////////////////////////////////////
-// Headers
+// Namespace ax::reader
 ///////////////////////////////////////////////////////////////////////////////
-#include <axiom/config.hpp>
-#include <axiom/container.hpp>
-#include <axiom/math.hpp>
-#include <axiom/reader.hpp>
+namespace ax::reader
+{
+
+struct XmlReader
+{
+
+};
+
+} // namespace ax::reader
