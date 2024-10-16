@@ -1,0 +1,15 @@
+# Builded objects
+build/
+*.d
+*.o
+*.a
+*.so
+*.dll
+
+# Unit tests files
+*.gcda
+*.gcno
+
+# IDE related folders
+.idea/
+.vscode/
