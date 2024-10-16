@@ -137,7 +137,7 @@ namespace axm = ax::math;
 /// \return
 ///
 ///////////////////////////////////////////////////////////////////////////////
-axm::Vector2 operator+(const axm::Vector2& lhs);
+AXIOM_NODISCARD axm::Vector2 operator+(const axm::Vector2& lhs);
 
 ///////////////////////////////////////////////////////////////////////////////
 /// \brief
@@ -148,7 +148,8 @@ axm::Vector2 operator+(const axm::Vector2& lhs);
 /// \return
 ///
 ///////////////////////////////////////////////////////////////////////////////
-axm::Vector2 operator+(const axm::Vector2& lhs, const axm::Vector2& rhs);
+AXIOM_NODISCARD axm::Vector2 operator+(const axm::Vector2& lhs,
+    const axm::Vector2& rhs);
 
 ///////////////////////////////////////////////////////////////////////////////
 /// \brief
@@ -159,7 +160,7 @@ axm::Vector2 operator+(const axm::Vector2& lhs, const axm::Vector2& rhs);
 /// \return
 ///
 ///////////////////////////////////////////////////////////////////////////////
-axm::Vector2 operator+(const axm::Vector2& lhs, float rhs);
+AXIOM_NODISCARD axm::Vector2 operator+(const axm::Vector2& lhs, float rhs);
 
 ///////////////////////////////////////////////////////////////////////////////
 /// \brief
@@ -170,7 +171,7 @@ axm::Vector2 operator+(const axm::Vector2& lhs, float rhs);
 /// \return
 ///
 ///////////////////////////////////////////////////////////////////////////////
-axm::Vector2 operator+(float lhs, const axm::Vector2& rhs);
+AXIOM_NODISCARD axm::Vector2 operator+(float lhs, const axm::Vector2& rhs);
 
 ///////////////////////////////////////////////////////////////////////////////
 /// \brief
@@ -180,18 +181,7 @@ axm::Vector2 operator+(float lhs, const axm::Vector2& rhs);
 /// \return
 ///
 ///////////////////////////////////////////////////////////////////////////////
-axm::Vector2 operator-(const axm::Vector2& lhs);
-
-///////////////////////////////////////////////////////////////////////////////
-/// \brief
-///
-/// \param lhs
-/// \param rhs
-///
-/// \return
-///
-///////////////////////////////////////////////////////////////////////////////
-axm::Vector2 operator-(const axm::Vector2& lhs, const axm::Vector2& rhs);
+AXIOM_NODISCARD axm::Vector2 operator-(const axm::Vector2& lhs);
 
 ///////////////////////////////////////////////////////////////////////////////
 /// \brief
@@ -202,7 +192,8 @@ axm::Vector2 operator-(const axm::Vector2& lhs, const axm::Vector2& rhs);
 /// \return
 ///
 ///////////////////////////////////////////////////////////////////////////////
-axm::Vector2 operator-(const axm::Vector2& lhs, float rhs);
+AXIOM_NODISCARD axm::Vector2 operator-(const axm::Vector2& lhs,
+    const axm::Vector2& rhs);
 
 ///////////////////////////////////////////////////////////////////////////////
 /// \brief
@@ -213,7 +204,7 @@ axm::Vector2 operator-(const axm::Vector2& lhs, float rhs);
 /// \return
 ///
 ///////////////////////////////////////////////////////////////////////////////
-axm::Vector2 operator-(float lhs, const axm::Vector2& rhs);
+AXIOM_NODISCARD axm::Vector2 operator-(const axm::Vector2& lhs, float rhs);
 
 ///////////////////////////////////////////////////////////////////////////////
 /// \brief
@@ -224,7 +215,7 @@ axm::Vector2 operator-(float lhs, const axm::Vector2& rhs);
 /// \return
 ///
 ///////////////////////////////////////////////////////////////////////////////
-axm::Vector2 operator*(const axm::Vector2& lhs, const axm::Vector2& rhs);
+AXIOM_NODISCARD axm::Vector2 operator-(float lhs, const axm::Vector2& rhs);
 
 ///////////////////////////////////////////////////////////////////////////////
 /// \brief
@@ -235,7 +226,8 @@ axm::Vector2 operator*(const axm::Vector2& lhs, const axm::Vector2& rhs);
 /// \return
 ///
 ///////////////////////////////////////////////////////////////////////////////
-axm::Vector2 operator*(const axm::Vector2& lhs, float rhs);
+AXIOM_NODISCARD axm::Vector2 operator*(const axm::Vector2& lhs,
+    const axm::Vector2& rhs);
 
 ///////////////////////////////////////////////////////////////////////////////
 /// \brief
@@ -246,7 +238,7 @@ axm::Vector2 operator*(const axm::Vector2& lhs, float rhs);
 /// \return
 ///
 ///////////////////////////////////////////////////////////////////////////////
-axm::Vector2 operator*(float lhs, const axm::Vector2& rhs);
+AXIOM_NODISCARD axm::Vector2 operator*(const axm::Vector2& lhs, float rhs);
 
 ///////////////////////////////////////////////////////////////////////////////
 /// \brief
@@ -257,7 +249,7 @@ axm::Vector2 operator*(float lhs, const axm::Vector2& rhs);
 /// \return
 ///
 ///////////////////////////////////////////////////////////////////////////////
-axm::Vector2 operator/(const axm::Vector2& lhs, const axm::Vector2& rhs);
+AXIOM_NODISCARD axm::Vector2 operator*(float lhs, const axm::Vector2& rhs);
 
 ///////////////////////////////////////////////////////////////////////////////
 /// \brief
@@ -268,7 +260,8 @@ axm::Vector2 operator/(const axm::Vector2& lhs, const axm::Vector2& rhs);
 /// \return
 ///
 ///////////////////////////////////////////////////////////////////////////////
-axm::Vector2 operator/(const axm::Vector2& lhs, float rhs);
+AXIOM_NODISCARD axm::Vector2 operator/(const axm::Vector2& lhs,
+    const axm::Vector2& rhs);
 
 ///////////////////////////////////////////////////////////////////////////////
 /// \brief
@@ -279,7 +272,18 @@ axm::Vector2 operator/(const axm::Vector2& lhs, float rhs);
 /// \return
 ///
 ///////////////////////////////////////////////////////////////////////////////
-axm::Vector2 operator/(float lhs, const axm::Vector2& rhs);
+AXIOM_NODISCARD axm::Vector2 operator/(const axm::Vector2& lhs, float rhs);
+
+///////////////////////////////////////////////////////////////////////////////
+/// \brief
+///
+/// \param lhs
+/// \param rhs
+///
+/// \return
+///
+///////////////////////////////////////////////////////////////////////////////
+AXIOM_NODISCARD axm::Vector2 operator/(float lhs, const axm::Vector2& rhs);
 
 ///////////////////////////////////////////////////////////////////////////////
 /// \brief
@@ -378,7 +382,8 @@ axm::Vector2& operator/=(const axm::Vector2& lhs, float rhs);
 /// \return
 ///
 ///////////////////////////////////////////////////////////////////////////////
-bool operator==(const axm::Vector2& lhs, const axm::Vector2& rhs);
+AXIOM_NODISCARD bool operator==(const axm::Vector2& lhs,
+    const axm::Vector2& rhs);
 
 ///////////////////////////////////////////////////////////////////////////////
 /// \brief
@@ -389,7 +394,8 @@ bool operator==(const axm::Vector2& lhs, const axm::Vector2& rhs);
 /// \return
 ///
 ///////////////////////////////////////////////////////////////////////////////
-bool operator!=(const axm::Vector2& lhs, const axm::Vector2& rhs);
+AXIOM_NODISCARD bool operator!=(const axm::Vector2& lhs,
+    const axm::Vector2& rhs);
 
 ///////////////////////////////////////////////////////////////////////////////
 /// \brief
