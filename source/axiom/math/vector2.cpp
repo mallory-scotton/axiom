@@ -598,6 +598,7 @@ AXIOM_NODISCARD Vector2 Vector2::clampAxes(float minAxisValue,
 ///////////////////////////////////////////////////////////////////////////////
 AXIOM_NODISCARD Vector2 Vector2::getSignVector(void) const
 {
+    // TODO: Fix sign to match 0 with +1 sign
     return (Vector2(axm::sign(x), axm::sign(y)));
 }
 
