@@ -38,3 +38,16 @@
 |[sign](./math/utilities/sign.md)|...|
 |[sqrt](./math/utilities/sqrt.md)|...|
 |[square](./math/utilities/square.md)|...|
+
+## Types
+
+|  |  |
+|--|--|
+|[Uint8](./math/types/uint8.md)|...|
+|[Uint16](./math/types/uint16.md)|...|
+|[Uint32](./math/types/uint32.md)|...|
+|[Uint64](./math/types/uint64.md)|...|
+|[int8](./math/types/int8.md)|...|
+|[int16](./math/types/int16.md)|...|
+|[int32](./math/types/int32.md)|...|
+|[int64](./math/types/int64.md)|...|
