@@ -32,6 +32,8 @@
 |[Vector2](./vector2/constructors/empty.md)|...|
 |[Vector2](./vector2/constructors/one-float.md)|...|
 |[Vector2](./vector2/constructors/two-float.md)|...|
+|[Vector2](./vector2/constructors/vector3.md)|...|
+|[Vector2](./vector2/constructors/vector4.md)|...|
 
 ## Public Methods
 
