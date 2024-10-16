@@ -357,3 +357,232 @@ std::ostream& operator<<(std::ostream& lhs, const Vector2& rhs)
     lhs << '(' << rhs.x << ", " << rhs.y << ')';
     return (lhs);
 }
+
+///////////////////////////////////////////////////////////////////////////////
+float& Vector2::component(Int32 index)
+{
+    CHECK(index >= 0 && index <= 1);
+    return (xy[index]);
+}
+
+///////////////////////////////////////////////////////////////////////////////
+const float& Vector2::component(Int32 index) const
+{
+    CHECK(index >= 0 && index <= 1);
+    return (xy[index]);
+}
+
+///////////////////////////////////////////////////////////////////////////////
+AXIOM_NODISCARD bool Vector2::componentWiseAllLessThan(const Vector2& other)
+    const
+{
+    return ((x < other.x) && (y < other.y));
+}
+
+///////////////////////////////////////////////////////////////////////////////
+AXIOM_NODISCARD bool Vector2::componentWiseAllGreaterThan(const Vector2& other)
+    const
+{
+    return ((x > other.x) && (y > other.y));
+}
+
+///////////////////////////////////////////////////////////////////////////////
+AXIOM_NODISCARD bool Vector2::componentWiseAllLessOrEqual(const Vector2& other)
+    const
+{
+    return ((x <= other.x) && (y <= other.y));
+}
+
+///////////////////////////////////////////////////////////////////////////////
+AXIOM_NODISCARD bool Vector2::componentWiseAllGreaterOrEqual(
+    const Vector2& other) const
+{
+    return ((x >= other.x) && (y >= other.y));
+}
+
+///////////////////////////////////////////////////////////////////////////////
+AXIOM_NODISCARD bool Vector2::equals(const Vector2& other, float tolerance)
+    const
+{
+    return (
+        (axm::abs(x - other.x) <= tolerance) &&
+        (axm::abs(y - other.y) <= tolerance)
+    );
+}
+
+///////////////////////////////////////////////////////////////////////////////
+void Vector2::set(float x, float y)
+{
+    this->x = x;
+    this->y = y;
+}
+
+///////////////////////////////////////////////////////////////////////////////
+AXIOM_NODISCARD float Vector2::getMax(void) const
+{
+    return (axm::max(x, y));
+}
+
+///////////////////////////////////////////////////////////////////////////////
+AXIOM_NODISCARD float Vector2::getAbsMax(void) const
+{
+    return (axm::max(axm::abs(x), axm::abs(y)));
+}
+
+///////////////////////////////////////////////////////////////////////////////
+AXIOM_NODISCARD float Vector2::getMin(void) const
+{
+    return (axm::min(x, y));
+}
+
+///////////////////////////////////////////////////////////////////////////////
+AXIOM_NODISCARD float Vector2::getAbsMin(void) const
+{
+    return (axm::min(axm::abs(x), axm::abs(y)));
+}
+
+///////////////////////////////////////////////////////////////////////////////
+AXIOM_NODISCARD float Vector2::size(void) const
+{
+    return (axm::sqrt((x * x) + (y * y)));
+}
+
+///////////////////////////////////////////////////////////////////////////////
+AXIOM_NODISCARD float Vector2::length(void) const
+{
+    return (size());
+}
+
+///////////////////////////////////////////////////////////////////////////////
+AXIOM_NODISCARD float Vector2::sizeSquared(void) const
+{
+    return ((x * x) + (y * y));
+}
+
+///////////////////////////////////////////////////////////////////////////////
+AXIOM_NODISCARD float Vector2::squaredLength(void) const
+{
+    return (sizeSquared());
+}
+
+///////////////////////////////////////////////////////////////////////////////
+AXIOM_NODISCARD float Vector2::dot(const Vector2& other) const
+{
+    return ((x * other.x) + (y * other.y));
+}
+
+///////////////////////////////////////////////////////////////////////////////
+AXIOM_NODISCARD Vector2 Vector2::getRotated(float angleDeg) const
+{
+    float sinus = 0.f;
+    float cosine = 0.f;
+    // TODO: Add sinus/cosine values
+    return (Vector2(
+        (cosine * x) - (sinus * y),
+        (sinus * x) - (cosine * y)
+    ));
+}
+
+///////////////////////////////////////////////////////////////////////////////
+AXIOM_NODISCARD Vector2 Vector2::getSafeNormal(float tolerance = SMALL_NUMBER)
+    const
+{
+    const float squareSum = sizeSquared();
+
+    if (squareSum > tolerance)
+    {
+        const float scale = axm::invSqrt(squareSum);
+        return (Vector2(x * scale, y * scale));
+    }
+    return (Vector2::zeroVector);
+}
+
+///////////////////////////////////////////////////////////////////////////////
+bool Vector2::normalize(float tolerance)
+{
+    const float squareSum = sizeSquared();
+
+    if (squareSum > tolerance)
+    {
+        const float scale = axm::invSqrt(squareSum);
+        x *= scale;
+        y *= scale;
+        return (true);
+    }
+    x = 0.f;
+    y = 0.f;
+    return (false);
+}
+
+///////////////////////////////////////////////////////////////////////////////
+AXIOM_NODISCARD bool Vector2::isNearlyZero(float tolerance) const
+{
+    return (
+        (axm::abs(x) <= tolerance) &&
+        (axm::abs(y) <= tolerance)
+    );
+}
+
+///////////////////////////////////////////////////////////////////////////////
+void Vector2::toDirectionAndLength(Vector2& outDir, float& outLength) const
+{
+    outLength = size();
+    if (outLength > SMALL_NUMBER)
+    {
+        float oneOverLength = 1.f / outLength;
+        outDir = Vector2(x * oneOverLength, y * oneOverLength);
+    }
+    else
+    {
+        outDir = Vector2::zeroVector;
+    }
+}
+
+///////////////////////////////////////////////////////////////////////////////
+void Vector2::toDirectionAndLength(Vector2& outDir, double& outLength) const
+{
+    outLength = size();
+    if (outLength > SMALL_NUMBER)
+    {
+        float oneOverLength = 1.f / outLength;
+        outDir = Vector2(x * oneOverLength, y * oneOverLength);
+    }
+    else
+    {
+        outDir = Vector2::zeroVector;
+    }
+}
+
+///////////////////////////////////////////////////////////////////////////////
+AXIOM_NODISCARD bool Vector2::isZero(void) const
+{
+    return ((x == 0.f) && (y == 0.f));
+}
+
+///////////////////////////////////////////////////////////////////////////////
+AXIOM_NODISCARD Vector2 Vector2::roundToVector(void) const
+{
+    return (Vector2(axm::round(x), axm::round(y)));
+}
+
+///////////////////////////////////////////////////////////////////////////////
+AXIOM_NODISCARD Vector2 Vector2::clampAxes(float minAxisValue,
+    float maxAxisValue) const
+{
+    return (Vector2(
+        (axm::clamp(x, minAxisValue, maxAxisValue)),
+        (axm::clamp(y, minAxisValue, maxAxisValue))
+    ));
+}
+
+///////////////////////////////////////////////////////////////////////////////
+AXIOM_NODISCARD Vector2 Vector2::getSignVector(void) const
+{
+    return (Vector2(axm::sign(x), axm::sign(y)));
+}
+
+///////////////////////////////////////////////////////////////////////////////
+AXIOM_NODISCARD Vector2 Vector2::getAbs(void) const
+{
+    return (Vector2(axm::abs(x), axm::abs(y)));
+}
