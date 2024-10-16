@@ -484,7 +484,7 @@ AXIOM_NODISCARD Vector2 Vector2::getRotated(float angleDeg) const
 }
 
 ///////////////////////////////////////////////////////////////////////////////
-AXIOM_NODISCARD Vector2 Vector2::getSafeNormal(float tolerance = SMALL_NUMBER)
+AXIOM_NODISCARD Vector2 Vector2::getSafeNormal(float tolerance)
     const
 {
     const float squareSum = sizeSquared();
