@@ -224,6 +224,30 @@ AXIOM_NODISCARD bool operator!=(const Vector2& lhs, const Vector2& rhs)
 }
 
 ///////////////////////////////////////////////////////////////////////////////
+AXIOM_NODISCARD bool operator<(const Vector2& lhs, const Vector2& rhs)
+{
+    return ((lhs.x < rhs.x) && (lhs.x < rhs.x));
+}
+
+///////////////////////////////////////////////////////////////////////////////
+AXIOM_NODISCARD bool operator<=(const Vector2& lhs, const Vector2& rhs)
+{
+    return ((lhs.x <= rhs.x) && (lhs.x <= rhs.x));
+}
+
+///////////////////////////////////////////////////////////////////////////////
+AXIOM_NODISCARD bool operator>(const Vector2& lhs, const Vector2& rhs)
+{
+    return ((lhs.x > rhs.x) && (lhs.x > rhs.x));
+}
+
+///////////////////////////////////////////////////////////////////////////////
+AXIOM_NODISCARD bool operator>=(const Vector2& lhs, const Vector2& rhs)
+{
+    return ((lhs.x >= rhs.x) && (lhs.x >= rhs.x));
+}
+
+///////////////////////////////////////////////////////////////////////////////
 Vector2& operator++(Vector2& lhs)
 {
     lhs.x++;
