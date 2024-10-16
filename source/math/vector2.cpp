@@ -218,33 +218,105 @@ AXIOM_NODISCARD bool operator==(const Vector2& lhs, const Vector2& rhs)
 }
 
 ///////////////////////////////////////////////////////////////////////////////
+AXIOM_NODISCARD bool operator==(const Vector2& lhs, float rhs)
+{
+    return ((lhs.x == rhs) && (lhs.y == rhs));
+}
+
+///////////////////////////////////////////////////////////////////////////////
+AXIOM_NODISCARD bool operator==(float lhs, const Vector2& rhs)
+{
+    return ((lhs == rhs.x) && (lhs == rhs.y));
+}
+
+///////////////////////////////////////////////////////////////////////////////
 AXIOM_NODISCARD bool operator!=(const Vector2& lhs, const Vector2& rhs)
 {
     return ((lhs.x != rhs.x) || (lhs.y != rhs.y));
 }
 
 ///////////////////////////////////////////////////////////////////////////////
+AXIOM_NODISCARD bool operator!=(const Vector2& lhs, float rhs)
+{
+    return ((lhs.x != rhs) || (lhs.y != rhs));
+}
+
+///////////////////////////////////////////////////////////////////////////////
+AXIOM_NODISCARD bool operator!=(float lhs, const Vector2& rhs)
+{
+    return ((lhs != rhs.x) || (lhs != rhs.y));
+}
+
+///////////////////////////////////////////////////////////////////////////////
 AXIOM_NODISCARD bool operator<(const Vector2& lhs, const Vector2& rhs)
 {
-    return ((lhs.x < rhs.x) && (lhs.x < rhs.x));
+    return ((lhs.x < rhs.x) && (lhs.y < rhs.y));
+}
+
+///////////////////////////////////////////////////////////////////////////////
+AXIOM_NODISCARD bool operator<(const Vector2& lhs, float rhs)
+{
+    return ((lhs.x < rhs) && (lhs.y < rhs));
+}
+
+///////////////////////////////////////////////////////////////////////////////
+AXIOM_NODISCARD bool operator<(float lhs, const Vector2& rhs)
+{
+    return ((lhs < rhs.x) && (lhs < rhs.y));
 }
 
 ///////////////////////////////////////////////////////////////////////////////
 AXIOM_NODISCARD bool operator<=(const Vector2& lhs, const Vector2& rhs)
 {
-    return ((lhs.x <= rhs.x) && (lhs.x <= rhs.x));
+    return ((lhs.x <= rhs.x) && (lhs.y <= rhs.y));
+}
+
+///////////////////////////////////////////////////////////////////////////////
+AXIOM_NODISCARD bool operator<=(const Vector2& lhs, float rhs)
+{
+    return ((lhs.x <= rhs) && (lhs.y <= rhs));
+}
+
+///////////////////////////////////////////////////////////////////////////////
+AXIOM_NODISCARD bool operator<=(float lhs, const Vector2& rhs)
+{
+    return ((lhs <= rhs.x) && (lhs <= rhs.y));
 }
 
 ///////////////////////////////////////////////////////////////////////////////
 AXIOM_NODISCARD bool operator>(const Vector2& lhs, const Vector2& rhs)
 {
-    return ((lhs.x > rhs.x) && (lhs.x > rhs.x));
+    return ((lhs.x > rhs.x) && (lhs.y > rhs.y));
+}
+
+///////////////////////////////////////////////////////////////////////////////
+AXIOM_NODISCARD bool operator>(const Vector2& lhs, float rhs)
+{
+    return ((lhs.x > rhs) && (lhs.y > rhs));
+}
+
+///////////////////////////////////////////////////////////////////////////////
+AXIOM_NODISCARD bool operator>(float lhs, const Vector2& rhs)
+{
+    return ((lhs > rhs.x) && (lhs > rhs.y));
 }
 
 ///////////////////////////////////////////////////////////////////////////////
 AXIOM_NODISCARD bool operator>=(const Vector2& lhs, const Vector2& rhs)
 {
-    return ((lhs.x >= rhs.x) && (lhs.x >= rhs.x));
+    return ((lhs.x >= rhs.x) && (lhs.y >= rhs.y));
+}
+
+///////////////////////////////////////////////////////////////////////////////
+AXIOM_NODISCARD bool operator>=(const Vector2& lhs, float rhs)
+{
+    return ((lhs.x >= rhs) && (lhs.y >= rhs));
+}
+
+///////////////////////////////////////////////////////////////////////////////
+AXIOM_NODISCARD bool operator>=(float lhs, const Vector2& rhs)
+{
+    return ((lhs >= rhs.x) && (lhs >= rhs.y));
 }
 
 ///////////////////////////////////////////////////////////////////////////////
