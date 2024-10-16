@@ -39,6 +39,7 @@
 #include <axiom/math/edge.hpp>
 #include <axiom/math/export.hpp>
 #include <axiom/math/linearColor.hpp>
+#include <axiom/math/matrix.hpp>
 #include <axiom/math/quaternion.hpp>
 #include <axiom/math/rotator.hpp>
 #include <axiom/math/transform.hpp>
