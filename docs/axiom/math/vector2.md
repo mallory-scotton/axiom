@@ -82,12 +82,12 @@
 
 |  |  |
 |--|--|
-|[operator+](./vector2/operators/+op.md)|...|
-|[operator+](./vector2/operators/op+.md)|...|
-|[operator-](./vector2/operators/-op.md)|...|
-|[operator-](./vector2/operators/op-.md)|...|
-|[operator*](./vector2/operators/op*.md)|...|
-|[operator/](./vector2/operators/ops.md)|...|
+|[operator+](./vector2/operators/+op.md)|Preserve a vector.|
+|[operator+](./vector2/operators/op+.md)|Adds using vectors.|
+|[operator-](./vector2/operators/-op.md)|Negates a vector.|
+|[operator-](./vector2/operators/op-.md)|Subtracts using vectors.|
+|[operator*](./vector2/operators/op*.md)|Multiplies using vectors.|
+|[operator/](./vector2/operators/ops.md)|Divides using vectors.|
 |[operator+=](./vector2/operators/op+=.md)|...|
 |[operator-=](./vector2/operators/op-=.md)|...|
 |[operator*=](./vector2/operators/op*=.md)|...|
