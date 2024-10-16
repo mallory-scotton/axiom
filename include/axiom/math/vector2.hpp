@@ -35,6 +35,8 @@
 #include <axiom/config.hpp>
 #include <axiom/math/types.hpp>
 #include <axiom/math/defines.hpp>
+#include <axiom/math/vector3.hpp>
+#include <axiom/math/vector4.hpp>
 #include <iostream>
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -44,7 +46,8 @@ namespace ax::math
 {
 
 ///////////////////////////////////////////////////////////////////////////////
-/// \brief
+/// \brief A vector in 2D space composed of components (x, y) with floating
+///        point precision.
 ///
 ///////////////////////////////////////////////////////////////////////////////
 struct Vector2
@@ -58,10 +61,10 @@ public:
     {
         struct
         {
-            float x;        //<!
-            float y;        //<!
+            float x;        //<! X coordinate of the vector.
+            float y;        //<! Y coordinate of the vector.
         };
-        float xy[2];        //<!
+        float xy[2];        //<! Coordinates array of the vector.
     };
 
 public:
@@ -69,428 +72,486 @@ public:
     /// \brief
     ///
     ///////////////////////////////////////////////////////////////////////////
-    static const Vector2 zeroVector;    //<!
-    static const Vector2 oneVector;     //<!
-    static const Vector2 upVector;      //<!
-    static const Vector2 downVector;    //<!
-    static const Vector2 leftVector;    //<!
-    static const Vector2 rightVector;   //<!
-    static const Vector2 xAxisVector;   //<!
-    static const Vector2 yAxisVector;   //<!
+    static const Vector2 zeroVector;    //<! Vector2( 0,  0).
+    static const Vector2 oneVector;     //<! Vector2( 1,  1).
+    static const Vector2 upVector;      //<! Vector2( 0,  1).
+    static const Vector2 downVector;    //<! Vector2( 0, -1).
+    static const Vector2 leftVector;    //<! Vector2( 1,  0).
+    static const Vector2 rightVector;   //<! Vector2(-1,  0).
+    static const Vector2 xAxisVector;   //<! Vector2( 1,  0).
+    static const Vector2 yAxisVector;   //<! Vector2( 0,  1).
 
 public:
     ///////////////////////////////////////////////////////////////////////////
-    /// \brief
+    /// \brief Constructor which iniializes all components to zero.
     ///
     ///////////////////////////////////////////////////////////////////////////
     Vector2(void);
 
     ///////////////////////////////////////////////////////////////////////////
-    /// \brief
+    /// \brief Constructor initializing both components to a single float
+    /// value.
     ///
-    /// \param f
+    /// \param f Value to set both components to.
     ///
     ///////////////////////////////////////////////////////////////////////////
     Vector2(float f);
 
     ///////////////////////////////////////////////////////////////////////////
-    /// \brief
+    /// \brief Constructor using initial values for each component.
     ///
-    /// \param x
-    /// \param y
+    /// \param x X coordinate.
+    /// \param y Y coordinate.
     ///
     ///////////////////////////////////////////////////////////////////////////
     Vector2(float x, float y);
 
+    ///////////////////////////////////////////////////////////////////////////
+    /// \brief Constructs a vector from an Vector3.
+    ///
+    /// Copies the `x` and `y` components from the Vector3.
+    ///
+    /// \param vector Vector to copy from.
+    ///
+    ///////////////////////////////////////////////////////////////////////////
+    Vector2(const Vector3& vector);
+
+    ///////////////////////////////////////////////////////////////////////////
+    /// \brief Constructs a vector from an Vector4.
+    ///
+    /// Copies the `x` and `y` components from the Vector4.
+    ///
+    /// \param vector Vector to copy from.
+    ///
+    ///////////////////////////////////////////////////////////////////////////
+    Vector2(const Vector4& vector);
+
 public:
     ///////////////////////////////////////////////////////////////////////////
-    /// \brief
+    /// \brief Gets specific component of the vector.
     ///
-    /// \param index
+    /// \param index The index of vector component.
     ///
-    /// \return
+    /// \return Reference to the component.
     ///
     ///////////////////////////////////////////////////////////////////////////
     AXIOM_NODISCARD float& operator[](Int32 index);
 
     ///////////////////////////////////////////////////////////////////////////
-    /// \brief
+    /// \brief Gets specific component of the vector.
     ///
-    /// \param index
+    /// \param index The index of vector component.
     ///
-    /// \return
+    /// \return Copy of the component.
     ///
     ///////////////////////////////////////////////////////////////////////////
     AXIOM_NODISCARD const float& operator[](Int32 index) const;
 
 public:
     ///////////////////////////////////////////////////////////////////////////
-    /// \brief
+    /// \brief Gets specific component of the vector.
     ///
-    /// \param index
+    /// \param index The index of vector component.
     ///
-    /// \return
+    /// \return Reference to the component.
     ///
     ///////////////////////////////////////////////////////////////////////////
     float& component(Int32 index);
 
     ///////////////////////////////////////////////////////////////////////////
-    /// \brief
+    /// \brief Gets specific component of the vector.
     ///
-    /// \param index
+    /// \param index The index of vector component.
     ///
-    /// \return
+    /// \return Copy of the component.
     ///
     ///////////////////////////////////////////////////////////////////////////
     const float& component(Int32 index) const;
 
     ///////////////////////////////////////////////////////////////////////////
-    /// \brief
+    /// \brief Checks whether both components of this vector are less than
+    /// another.
     ///
-    /// \param other
+    /// \param other The vector to compare against.
     ///
-    /// \return
+    /// \return `true` if both components of this are less than `other`,
+    /// otherwise `false`.
     ///
     ///////////////////////////////////////////////////////////////////////////
     AXIOM_NODISCARD bool componentWiseAllLessThan(const Vector2& other) const;
 
     ///////////////////////////////////////////////////////////////////////////
-    /// \brief
+    /// \brief Checks whether both components of this vector are greater
+    /// than another.
     ///
-    /// \param other
+    /// \param other The vector to compare against.
     ///
-    /// \return
+    /// \return `true` if both components of this are greater than `other`,
+    /// otherwise `false`.
     ///
     ///////////////////////////////////////////////////////////////////////////
     AXIOM_NODISCARD bool componentWiseAllGreaterThan(const Vector2& other)
         const;
 
     ///////////////////////////////////////////////////////////////////////////
-    /// \brief
+    /// \brief Checks whether both components of this vector are less than or
+    /// equal to another.
     ///
-    /// \param other
+    /// \param other The vector to compare against.
     ///
-    /// \return
+    /// \return `true` if both components of this are less than or equal to
+    /// `other`, otherwise `false`.
     ///
     ///////////////////////////////////////////////////////////////////////////
     AXIOM_NODISCARD bool componentWiseAllLessOrEqual(const Vector2& other)
         const;
 
     ///////////////////////////////////////////////////////////////////////////
-    /// \brief
+    /// \brief Checks whether both components of this vector are greater than
+    /// or equal to another.
     ///
-    /// \param other
+    /// \param other The vector to compare against.
     ///
-    /// \return
+    /// \return `true` if both components of this are greater than or equal to
+    /// `other`, otherwise `false`.
     ///
     ///////////////////////////////////////////////////////////////////////////
     AXIOM_NODISCARD bool componentWiseAllGreaterOrEqual(const Vector2& other)
         const;
 
     ///////////////////////////////////////////////////////////////////////////
-    /// \brief
+    /// \brief Checks for equality with error-tolerant comparison.
     ///
-    /// \param other
-    /// \param tolerance
+    /// \param other The vector to compare.
+    /// \param tolerance Error tolerance.
     ///
-    /// \return
+    /// \return `true` if the vectors are equal within specified tolerance,
+    /// otherwise `false`.
     ///
     ///////////////////////////////////////////////////////////////////////////
     AXIOM_NODISCARD bool equals(const Vector2& other,
         float tolerance = KINDA_SMALL_NUMBER) const;
 
     ///////////////////////////////////////////////////////////////////////////
-    /// \brief
+    /// \brief Set the values of the vector directly.
     ///
-    /// \param x
-    /// \param y
+    /// \param x New X coordinate.
+    /// \param y New Y coordinate.
     ///
     ///////////////////////////////////////////////////////////////////////////
     void set(float x, float y);
 
     ///////////////////////////////////////////////////////////////////////////
-    /// \brief
+    /// \brief Get the maximum value of the vector's components.
     ///
-    /// \return
+    /// \return The maximum value of the vector's components.
     ///
     ///////////////////////////////////////////////////////////////////////////
     AXIOM_NODISCARD float getMax(void) const;
 
     ///////////////////////////////////////////////////////////////////////////
-    /// \brief
+    /// \brief Get the maximum absolute value of the vector's components.
     ///
-    /// \return
+    /// \return The maximum absolute value of the vector's components.
     ///
     ///////////////////////////////////////////////////////////////////////////
     AXIOM_NODISCARD float getAbsMax(void) const;
 
     ///////////////////////////////////////////////////////////////////////////
-    /// \brief
+    /// \brief Get the minimum value of the vector's components.
     ///
-    /// \return
+    /// \return The minimum value of the vector's components.
     ///
     ///////////////////////////////////////////////////////////////////////////
     AXIOM_NODISCARD float getMin(void) const;
 
     ///////////////////////////////////////////////////////////////////////////
-    /// \brief
+    /// \brief Get the absolute minimum value of the vector's components.
     ///
-    /// \return
+    /// \return The absolute minimum value of the vector's components.
     ///
     ///////////////////////////////////////////////////////////////////////////
     AXIOM_NODISCARD float getAbsMin(void) const;
 
     ///////////////////////////////////////////////////////////////////////////
-    /// \brief
+    /// \brief Get the length (magnitude) of this vector.
     ///
-    /// \return
+    /// \return The length of this vector.
+    ///
+    /// \see length - This function is a sononym for length().
     ///
     ///////////////////////////////////////////////////////////////////////////
     AXIOM_NODISCARD float size(void) const;
 
     ///////////////////////////////////////////////////////////////////////////
-    /// \brief
+    /// \brief Get the length (magnitude) of this vector.
     ///
-    /// \return
+    /// \return The length of this vector.
+    ///
+    /// \see size - This function is a sononym for size().
     ///
     ///////////////////////////////////////////////////////////////////////////
     AXIOM_NODISCARD float length(void) const;
 
     ///////////////////////////////////////////////////////////////////////////
-    /// \brief
+    /// \brief Get the squared length of this vector.
     ///
-    /// \return
+    /// \return The squared length of this vector.
+    ///
+    /// \see squaredLength - This function is a sononym for squaredLength().
     ///
     ///////////////////////////////////////////////////////////////////////////
     AXIOM_NODISCARD float sizeSquared(void) const;
 
     ///////////////////////////////////////////////////////////////////////////
-    /// \brief
+    /// \brief Get the squared length of this vector.
     ///
-    /// \return
+    /// \return The squared length of this vector.
+    ///
+    /// \see sizeSquared - This function is a sononym for sizeSquared().
     ///
     ///////////////////////////////////////////////////////////////////////////
     AXIOM_NODISCARD float squaredLength(void) const;
 
     ///////////////////////////////////////////////////////////////////////////
-    /// \brief
+    /// \brief Get the dot product of this vector against another.
     ///
-    /// \param other
+    /// \param other The vector to measure dot product against.
     ///
-    /// \return
+    /// \return The dot product.
     ///
     ///////////////////////////////////////////////////////////////////////////
     AXIOM_NODISCARD float dot(const Vector2& other) const;
 
     ///////////////////////////////////////////////////////////////////////////
-    /// \brief
+    /// \brief Rotates around axis (0,0,1).
     ///
-    /// \param angleDeg
+    /// \param angleDeg Angle to rotate (in degrees).
     ///
-    /// \return
+    /// \return Rotated Vector.
     ///
     ///////////////////////////////////////////////////////////////////////////
     AXIOM_NODISCARD Vector2 getRotated(float angleDeg) const;
 
     ///////////////////////////////////////////////////////////////////////////
-    /// \brief
+    /// \brief Gets a normalized copy of the vector, checking it is safe to do
+    /// so based on the length.
     ///
-    /// \param tolerance
+    /// Returns zero vector if vector length is too small to safely normalize.
     ///
-    /// \return
+    /// \param tolerance Minimum squared length of vector for normalization.
+    ///
+    /// \return A normalized copy of the vector if safe, (0,0) otherwise.
     ///
     ///////////////////////////////////////////////////////////////////////////
     AXIOM_NODISCARD Vector2 getSafeNormal(float tolerance = SMALL_NUMBER)
         const;
 
     ///////////////////////////////////////////////////////////////////////////
-    /// \brief
+    /// \brief Normalize this vector in-place if it is large enough, set it to
+    /// (0,0) otherwise.
     ///
-    /// \param tolerance
+    /// \note This is different from Vector3::normalize, which leaves the
+    /// vector unchanged if it is too small to normalize.
     ///
-    /// \return
+    /// \param tolerance Minimum squared length of vector for normalization.
+    ///
+    /// \return `true` if the vector was normalized correctly, `false` if it
+    /// was too small and set to zero.
     ///
     ///////////////////////////////////////////////////////////////////////////
     bool normalize(float tolerance = SMALL_NUMBER);
 
     ///////////////////////////////////////////////////////////////////////////
-    /// \brief
+    /// \brief Checks whether vector is near to zero within a specified
+    /// tolerance.
     ///
-    /// \param tolerance
+    /// \param tolerance Error tolerance.
     ///
-    /// \return
+    /// \return `true` if vector is in tolerance to zero, otherwise `false`.
     ///
     ///////////////////////////////////////////////////////////////////////////
     AXIOM_NODISCARD bool isNearlyZero(float tolerance = KINDA_SMALL_NUMBER)
         const;
 
     ///////////////////////////////////////////////////////////////////////////
-    /// \brief
+    /// \brief Util to convert this vector into a unit direction vector and
+    /// its original length.
     ///
-    /// \param outDir
-    /// \param outLength
+    /// \param outDir Reference passed in to store unit direction vector.
+    /// \param outLength Reference passed in to store length of the vector.
     ///
     ///////////////////////////////////////////////////////////////////////////
     void toDirectionAndLength(Vector2& outDir, float& outLength) const;
 
     ///////////////////////////////////////////////////////////////////////////
-    /// \brief
+    /// \brief Util to convert this vector into a unit direction vector and
+    /// its original length.
     ///
-    /// \param outDir
-    /// \param outLength
+    /// \param outDir Reference passed in to store unit direction vector.
+    /// \param outLength Reference passed in to store length of the vector.
     ///
     ///////////////////////////////////////////////////////////////////////////
     void toDirectionAndLength(Vector2& outDir, double& outLength) const;
 
     ///////////////////////////////////////////////////////////////////////////
-    /// \brief
+    /// \brief Checks whether all components of the vector are exactly zero.
     ///
-    /// \return
+    /// \return `true` if vector is exactly zero, otherwise `false`.
     ///
     ///////////////////////////////////////////////////////////////////////////
     AXIOM_NODISCARD bool isZero(void) const;
 
     ///////////////////////////////////////////////////////////////////////////
-    /// \brief
+    /// \brief Get this vector as a vector where each component has been
+    /// rounded to the nearest int.
     ///
-    /// \return
+    /// \return New vector from this vector that is rounded.
     ///
     ///////////////////////////////////////////////////////////////////////////
     AXIOM_NODISCARD Vector2 roundToVector(void) const;
 
     ///////////////////////////////////////////////////////////////////////////
-    /// \brief
+    /// \brief Creates a copy of this vector with both axes clamped to the
+    /// given range.
     ///
-    /// \param minAxisValue
-    /// \param maxAxisValue
+    /// \param minAxisValue Minimum axis value.
+    /// \param maxAxisValue Maximum axis value.
     ///
-    /// \return
+    /// \return New vector with clamped axes.
     ///
     ///////////////////////////////////////////////////////////////////////////
     AXIOM_NODISCARD Vector2 clampAxes(float minAxisValue, float maxAxisValue)
         const;
 
     ///////////////////////////////////////////////////////////////////////////
-    /// \brief
+    /// \brief Get a copy of the vector as sign only.
     ///
-    /// \return
+    /// Each component is set to +1 or -1, with the sign of zero treated as +1.
+    ///
+    /// \return A copy of the vector with each component set to +1 or -1.
     ///
     ///////////////////////////////////////////////////////////////////////////
     AXIOM_NODISCARD Vector2 getSignVector(void) const;
 
     ///////////////////////////////////////////////////////////////////////////
-    /// \brief
+    /// \brief Get a copy of this vector with absolute value of each component.
     ///
-    /// \return
+    /// \return A copy of this vector with absolute value of each component.
     ///
     ///////////////////////////////////////////////////////////////////////////
     AXIOM_NODISCARD Vector2 getAbs(void) const;
 
 public:
     ///////////////////////////////////////////////////////////////////////////
-    /// \brief
+    /// \brief Returns a vector with the minimum component for each dimension
+    /// from the pair of vectors.
     ///
-    /// \param a
-    /// \param b
+    /// \param a The first vector.
+    /// \param b The second vector.
     ///
-    /// \return
+    /// \return The min vector.
     ///
     ///////////////////////////////////////////////////////////////////////////
     AXIOM_NODISCARD static Vector2 min(const Vector2& a, const Vector2& b);
 
     ///////////////////////////////////////////////////////////////////////////
-    /// \brief
+    /// \brief Returns a vector with the minimum component for each dimension
+    /// from the trio of vectors.
     ///
-    /// \param a
-    /// \param b
-    /// \param c
+    /// \param a The first vector.
+    /// \param b The second vector.
+    /// \param c The third vector.
     ///
-    /// \return
+    /// \return The min vector.
     ///
     ///////////////////////////////////////////////////////////////////////////
     AXIOM_NODISCARD static Vector2 min(const Vector2& a, const Vector2& b,
         const Vector2& c);
 
     ///////////////////////////////////////////////////////////////////////////
-    /// \brief
+    /// \brief Returns a vector with the maximum component for each dimension
+    /// from the pair of vectors.
     ///
-    /// \param a
-    /// \param b
+    /// \param a The first vector.
+    /// \param b The second vector.
     ///
-    /// \return
+    /// \return The max vector.
     ///
     ///////////////////////////////////////////////////////////////////////////
     AXIOM_NODISCARD static Vector2 max(const Vector2& a, const Vector2& b);
 
     ///////////////////////////////////////////////////////////////////////////
-    /// \brief
+    /// \brief Returns a vector with the maximum component for each dimension
+    /// from the trio of vectors.
     ///
-    /// \param a
-    /// \param b
-    /// \param c
+    /// \param a The first vector.
+    /// \param b The second vector.
+    /// \param c The third vector.
     ///
-    /// \return
+    /// \return The max vector.
     ///
     ///////////////////////////////////////////////////////////////////////////
     AXIOM_NODISCARD static Vector2 max(const Vector2& a, const Vector2& b,
         const Vector2& c);
 
     ///////////////////////////////////////////////////////////////////////////
-    /// \brief
+    /// \brief Returns a vector with each component clamped between a
+    /// minimum and a maximum.
     ///
-    /// \param value
-    /// \param minValue
-    /// \param maxValue
+    /// \param value The vector to clamp.
+    /// \param minValue The minimum vector.
+    /// \param maxValue The maximum vector.
     ///
-    /// \return
+    /// \return The clamped vector.
     ///
     ///////////////////////////////////////////////////////////////////////////
     AXIOM_NODISCARD static Vector2 clamp(const Vector2& value,
         const Vector2& minValue, const Vector2& maxValue);
 
     ///////////////////////////////////////////////////////////////////////////
-    /// \brief
+    /// \brief Calculates the dot product of two vectors.
     ///
-    /// \param a
-    /// \param b
+    /// \param a The first vector.
+    /// \param b The second vector.
     ///
-    /// \return
+    /// \return The dot product.
     ///
     ///////////////////////////////////////////////////////////////////////////
     AXIOM_NODISCARD static float dotProduct(const Vector2& a,
         const Vector2& b);
 
     ///////////////////////////////////////////////////////////////////////////
-    /// \brief
+    /// \brief Calculate the cross product of two vectors.
     ///
-    /// \param a
-    /// \param b
+    /// \param a The first vector.
+    /// \param b The second vector.
     ///
-    /// \return
+    /// \return The cross product.
     ///
     ///////////////////////////////////////////////////////////////////////////
     AXIOM_NODISCARD static float crossProduct(const Vector2& a,
         const Vector2& b);
 
     ///////////////////////////////////////////////////////////////////////////
-    /// \brief
+    /// \brief Squared distance between two 2D points.
     ///
-    /// \param a
-    /// \param b
+    /// \param a The first point.
+    /// \param b The second point.
     ///
-    /// \return
+    /// \return The squared distance between two 2D points.
     ///
     ///////////////////////////////////////////////////////////////////////////
     AXIOM_NODISCARD static float distSquared(const Vector2& a,
         const Vector2& b);
 
     ///////////////////////////////////////////////////////////////////////////
-    /// \brief
+    /// \brief Distance between two 2D points.
     ///
-    /// \param a
-    /// \param b
+    /// \param a The first point.
+    /// \param b The second point.
     ///
-    /// \return
+    /// \return The distance between two 2D points.
     ///
     ///////////////////////////////////////////////////////////////////////////
     AXIOM_NODISCARD static float distance(const Vector2& a, const Vector2& b);
