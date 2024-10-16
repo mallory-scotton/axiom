@@ -59,7 +59,7 @@
 |[getSafeNormal](./vector2/methods/getSafeNormal.md)|...|
 |[normalize](./vector2/methods/normalize.md)|...|
 |[isNearlyZero](./vector2/methods/isNearlyZero.md)|...|
-|[toDirectionAndLength](./vector2/methods/toDirectionAndLength.md)|...|
+|[toDirectionAndLength (2)](./vector2/methods/toDirectionAndLength.md)|...|
 |[isZero](./vector2/methods/isZero.md)|...|
 |[roundToVector](./vector2/methods/roundToVector.md)|...|
 |[clampAxes](./vector2/methods/clampAxes.md)|...|
@@ -70,8 +70,8 @@
 
 |  |  |
 |--|--|
-|[min](./vector2/methods/static/min.md)|...|
-|[max](./vector2/methods/static/max.md)|...|
+|[min (2)](./vector2/methods/static/min.md)|...|
+|[max (2)](./vector2/methods/static/max.md)|...|
 |[clamp](./vector2/methods/static/clamp.md)|...|
 |[dotProduct](./vector2/methods/static/dotProduct.md)|...|
 |[crossProduct](./vector2/methods/static/crossProduct.md)|...|
@@ -83,24 +83,24 @@
 |  |  |
 |--|--|
 |[operator+](./vector2/operators/+op.md)|Preserve a vector.|
-|[operator+](./vector2/operators/op+.md)|Adds using vectors.|
+|[operator+ (3)](./vector2/operators/op+.md)|Adds using vectors.|
 |[operator-](./vector2/operators/-op.md)|Negates a vector.|
-|[operator-](./vector2/operators/op-.md)|Subtracts using vectors.|
-|[operator*](./vector2/operators/op*.md)|Multiplies using vectors.|
-|[operator/](./vector2/operators/ops.md)|Divides using vectors.|
-|[operator+=](./vector2/operators/op+=.md)|...|
-|[operator-=](./vector2/operators/op-=.md)|...|
-|[operator*=](./vector2/operators/op*=.md)|...|
-|[operator/=](./vector2/operators/ops=.md)|...|
-|[operator==](./vector2/operators/op==.md)|...|
-|[operator!=](./vector2/operators/op!=.md)|...|
-|[operator<](./vector2/operators/op<.md)|...|
-|[operator<=](./vector2/operators/op<=.md)|...|
-|[operator>](./vector2/operators/op>.md)|...|
-|[operator>=](./vector2/operators/op>=.md)|...|
+|[operator- (3)](./vector2/operators/op-.md)|Subtracts using vectors.|
+|[operator* (3)](./vector2/operators/op*.md)|Multiplies using vectors.|
+|[operator/ (3)](./vector2/operators/ops.md)|Divides using vectors.|
+|[operator+= (2)](./vector2/operators/op+=.md)|...|
+|[operator-= (2)](./vector2/operators/op-=.md)|...|
+|[operator*= (2)](./vector2/operators/op*=.md)|...|
+|[operator/= (2)](./vector2/operators/ops=.md)|...|
+|[operator== (3)](./vector2/operators/op==.md)|...|
+|[operator!= (3)](./vector2/operators/op!=.md)|...|
+|[operator< (3)](./vector2/operators/op<.md)|...|
+|[operator<= (3)](./vector2/operators/op<=.md)|...|
+|[operator> (3)](./vector2/operators/op>.md)|...|
+|[operator>= (3)](./vector2/operators/op>=.md)|...|
 |[operator[]](./vector2/operators/op[].md)|...|
-|[operator++](./vector2/operators/op++.md)|...|
-|[operator--](./vector2/operators/op--.md)|...|
+|[operator++ (2)](./vector2/operators/op++.md)|...|
+|[operator-- (2)](./vector2/operators/op--.md)|...|
 |[operator^](./vector2/operators/op^.md)|...|
 |[operator\|](./vector2/operators/op\|.md)|...|
 |[operator<<](./vector2/operators/op<<.md)|...|
