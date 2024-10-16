@@ -352,6 +352,18 @@ Vector2& operator--(Vector2& lhs, int)
 }
 
 ///////////////////////////////////////////////////////////////////////////////
+AXIOM_NODISCARD float operator^(const Vector2& lhs, const Vector2& rhs)
+{
+    return ((lhs.x * rhs.y) - (lhs.y * rhs.x));
+}
+
+///////////////////////////////////////////////////////////////////////////////
+AXIOM_NODISCARD float operator|(const Vector2& lhs, const Vector2& rhs)
+{
+    return ((lhs.x * rhs.x) + (lhs.y * rhs.y));
+}
+
+///////////////////////////////////////////////////////////////////////////////
 std::ostream& operator<<(std::ostream& lhs, const Vector2& rhs)
 {
     lhs << '(' << rhs.x << ", " << rhs.y << ')';
@@ -585,4 +597,76 @@ AXIOM_NODISCARD Vector2 Vector2::getSignVector(void) const
 AXIOM_NODISCARD Vector2 Vector2::getAbs(void) const
 {
     return (Vector2(axm::abs(x), axm::abs(y)));
+}
+
+///////////////////////////////////////////////////////////////////////////////
+AXIOM_NODISCARD Vector2 Vector2::min(const Vector2& a, const Vector2& b)
+{
+    return (Vector2(
+        axm::min(a.x, b.x),
+        axm::min(a.y, b.y)
+    ));
+}
+
+///////////////////////////////////////////////////////////////////////////////
+AXIOM_NODISCARD Vector2 Vector2::min(const Vector2& a, const Vector2& b,
+    const Vector2& c)
+{
+    return (Vector2(
+        axm::min(a.x, b.x, c.x),
+        axm::min(a.y, b.y, c.y)
+    ));
+}
+
+///////////////////////////////////////////////////////////////////////////////
+AXIOM_NODISCARD Vector2 Vector2::max(const Vector2& a, const Vector2& b)
+{
+    return (Vector2(
+        axm::max(a.x, b.x),
+        axm::max(a.y, b.y)
+    ));
+}
+
+///////////////////////////////////////////////////////////////////////////////
+AXIOM_NODISCARD Vector2 Vector2::max(const Vector2& a, const Vector2& b,
+    const Vector2& c)
+{
+    return (Vector2(
+        axm::max(a.x, b.x, c.x),
+        axm::max(a.y, b.y, c.y)
+    ));
+}
+
+///////////////////////////////////////////////////////////////////////////////
+AXIOM_NODISCARD Vector2 Vector2::clamp(const Vector2& value,
+    const Vector2& minValue, const Vector2& maxValue)
+{
+    return (Vector2(
+        axm::clamp(value.x, minValue.x, maxValue.x),
+        axm::clamp(value.y, minValue.y, maxValue.y)
+    ));
+}
+
+///////////////////////////////////////////////////////////////////////////////
+AXIOM_NODISCARD float Vector2::dotProduct(const Vector2& a, const Vector2& b)
+{
+    return (a | b);
+}
+
+///////////////////////////////////////////////////////////////////////////////
+AXIOM_NODISCARD float Vector2::crossProduct(const Vector2& a, const Vector2& b)
+{
+    return (a ^ b);
+}
+
+///////////////////////////////////////////////////////////////////////////////
+AXIOM_NODISCARD float Vector2::distSquared(const Vector2& a, const Vector2& b)
+{
+    return ((axm::square(b.x - a.x) + axm::square(b.y - a.y)));
+}
+
+///////////////////////////////////////////////////////////////////////////////
+AXIOM_NODISCARD float Vector2::distance(const Vector2& a, const Vector2& b)
+{
+    return (axm::sqrt(Vector2::distSquared(a, b)));
 }
