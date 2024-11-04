@@ -32,9 +32,7 @@
 ///////////////////////////////////////////////////////////////////////////////
 // Headers
 ///////////////////////////////////////////////////////////////////////////////
-#include <axiom/config.hpp>
-#include <axiom/audio.hpp>
-#include <axiom/container.hpp>
-#include <axiom/math.hpp>
-#include <axiom/reader.hpp>
-#include <axiom/window.hpp>
+#include <SFML/System.hpp>
+#include <SFML/Graphics.hpp>
+#include <SFML/Window.hpp>
+#include <SFML/OpenGL.hpp>
