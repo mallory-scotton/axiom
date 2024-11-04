@@ -53,7 +53,7 @@ typedef sf::Sensor Sensor;
 typedef sf::Clipboard Clipboard;
 typedef sf::ContextSettings ContextSettings;
 typedef sf::VideoMode VideoMode;
-typedef sf::RenderWindow Window;
+typedef sf::Window Window;
 
 ///////////////////////////////////////////////////////////////////////////////
 // Namespace forward
