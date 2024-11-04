@@ -61,7 +61,7 @@ EXTENSION         = .cpp
 
 SOURCES           = ./source/axiom/math/vector2.cpp \
                     ./source/axiom/math/vector3.cpp \
-                    ./source/axiom/window/videoMode.cpp
+                    ./source/axiom/graphics/videoMode.cpp
 
 ###############################################################################
 #                              MAKEFILE OBJECTS                               #
