@@ -60,7 +60,8 @@ NO_VISUAL         = 0
 EXTENSION         = .cpp
 
 SOURCES           = ./source/axiom/math/vector2.cpp \
-                    ./source/axiom/math/vector3.cpp
+                    ./source/axiom/math/vector3.cpp \
+                    ./source/axiom/window/videoMode.cpp
 
 ###############################################################################
 #                              MAKEFILE OBJECTS                               #
