@@ -59,7 +59,8 @@ NO_VISUAL         = 0
 # File extension
 EXTENSION         = .cpp
 
-SOURCES           = ./source/axiom/math/vector2.cpp
+SOURCES           = ./source/axiom/math/vector2.cpp \
+                    ./source/axiom/math/vector3.cpp
 
 ###############################################################################
 #                              MAKEFILE OBJECTS                               #
