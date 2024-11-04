@@ -62,8 +62,7 @@ EXTENSION         = .cpp
 SRC_MATH          = ./source/axiom/math/vector2.cpp \
                     ./source/axiom/math/vector3.cpp
 
-SRC_GRAPHICS      = ./source/axiom/graphics/contextSettings.cpp \
-                    ./source/axiom/graphics/videoMode.cpp
+SRC_GRAPHICS      =
 
 SOURCES           = $(SRC_MATH) \
                     $(SRC_GRAPHICS)
