@@ -59,9 +59,14 @@ NO_VISUAL         = 0
 # File extension
 EXTENSION         = .cpp
 
-SOURCES           = ./source/axiom/math/vector2.cpp \
-                    ./source/axiom/math/vector3.cpp \
+SRC_MATH          = ./source/axiom/math/vector2.cpp \
+                    ./source/axiom/math/vector3.cpp
+
+SRC_GRAPHICS      = ./source/axiom/graphics/contextSettings.cpp \
                     ./source/axiom/graphics/videoMode.cpp
+
+SOURCES           = $(SRC_MATH) \
+                    $(SRC_GRAPHICS)
 
 ###############################################################################
 #                              MAKEFILE OBJECTS                               #
