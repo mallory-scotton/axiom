@@ -27,17 +27,17 @@
 ///////////////////////////////////////////////////////////////////////////////
 // Headers
 ///////////////////////////////////////////////////////////////////////////////
-#include <axiom/window/videoMode.hpp>
+#include <axiom/graphics/videoMode.hpp>
 
 ///////////////////////////////////////////////////////////////////////////////
-axw::VideoMode::VideoMode(void) : width(800), height(600), bitsPerPixel(32) {}
+axg::VideoMode::VideoMode(void) : width(800), height(600), bitsPerPixel(32) {}
 
 ///////////////////////////////////////////////////////////////////////////////
-axw::VideoMode::VideoMode(Uint32 width, Uint32 height, Uint32 modeBitsPerPixel)
+axg::VideoMode::VideoMode(Uint32 width, Uint32 height, Uint32 modeBitsPerPixel)
     : width(width), height(height), bitsPerPixel(modeBitsPerPixel) {}
 
 ///////////////////////////////////////////////////////////////////////////////
-AXIOM_NODISCARD bool operator==(axw::VideoMode& lhs, axw::VideoMode& rhs)
+AXIOM_NODISCARD bool operator==(axg::VideoMode& lhs, axg::VideoMode& rhs)
 {
     return (
         (lhs.width == rhs.width) &&
@@ -47,7 +47,7 @@ AXIOM_NODISCARD bool operator==(axw::VideoMode& lhs, axw::VideoMode& rhs)
 }
 
 ///////////////////////////////////////////////////////////////////////////////
-AXIOM_NODISCARD bool operator!=(axw::VideoMode& lhs, axw::VideoMode& rhs)
+AXIOM_NODISCARD bool operator!=(axg::VideoMode& lhs, axg::VideoMode& rhs)
 {
     return (
         (lhs.width != rhs.width) ||
@@ -57,19 +57,19 @@ AXIOM_NODISCARD bool operator!=(axw::VideoMode& lhs, axw::VideoMode& rhs)
 }
 
 ///////////////////////////////////////////////////////////////////////////////
-AXIOM_NODISCARD bool operator>(axw::VideoMode& lhs, axw::VideoMode& rhs)
+AXIOM_NODISCARD bool operator>(axg::VideoMode& lhs, axg::VideoMode& rhs)
 {
     return (rhs < lhs);
 }
 
 ///////////////////////////////////////////////////////////////////////////////
-AXIOM_NODISCARD bool operator>=(axw::VideoMode& lhs, axw::VideoMode& rhs)
+AXIOM_NODISCARD bool operator>=(axg::VideoMode& lhs, axg::VideoMode& rhs)
 {
     return (!(lhs < rhs));
 }
 
 ///////////////////////////////////////////////////////////////////////////////
-AXIOM_NODISCARD bool operator<(axw::VideoMode& lhs, axw::VideoMode& rhs)
+AXIOM_NODISCARD bool operator<(axg::VideoMode& lhs, axg::VideoMode& rhs)
 {
     if (lhs.bitsPerPixel == rhs.bitsPerPixel)
     {
@@ -83,7 +83,7 @@ AXIOM_NODISCARD bool operator<(axw::VideoMode& lhs, axw::VideoMode& rhs)
 }
 
 ///////////////////////////////////////////////////////////////////////////////
-AXIOM_NODISCARD bool operator<=(axw::VideoMode& lhs, axw::VideoMode& rhs)
+AXIOM_NODISCARD bool operator<=(axg::VideoMode& lhs, axg::VideoMode& rhs)
 {
     return (!(rhs < lhs));
 }
