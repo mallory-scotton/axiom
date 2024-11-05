@@ -336,7 +336,7 @@ Vector2& operator++(Vector2& lhs)
 }
 
 ///////////////////////////////////////////////////////////////////////////////
-Vector2& operator++(Vector2& lhs, int)
+Vector2 operator++(Vector2& lhs, int)
 {
     lhs.x++;
     lhs.y++;
@@ -352,7 +352,7 @@ Vector2& operator--(Vector2& lhs)
 }
 
 ///////////////////////////////////////////////////////////////////////////////
-Vector2& operator--(Vector2& lhs, int)
+Vector2 operator--(Vector2& lhs, int)
 {
     lhs.x--;
     lhs.y--;
