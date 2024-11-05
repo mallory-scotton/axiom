@@ -35,6 +35,7 @@
 #include <axiom/config.hpp>
 #include <axiom/math/types.hpp>
 #include <string>
+#include <iostream>
 
 ///////////////////////////////////////////////////////////////////////////////
 /// \brief
@@ -122,6 +123,13 @@ public:
     ///////////////////////////////////////////////////////////////////////////
     struct ConstIterator
     {
+    protected:
+        ///////////////////////////////////////////////////////////////////////
+        /// \brief
+        ///
+        ///////////////////////////////////////////////////////////////////////
+        friend struct String;
+
     protected:
         // ANCHOR - Member Data
 
@@ -221,6 +229,13 @@ public:
     ///////////////////////////////////////////////////////////////////////////
     struct Iterator : public ConstIterator
     {
+    protected:
+        ///////////////////////////////////////////////////////////////////////
+        /// \brief
+        ///
+        ///////////////////////////////////////////////////////////////////////
+        friend struct String;
+
     public:
         // ANCHOR - Constructors
 
@@ -264,6 +279,15 @@ public:
 
     // !SECTION
 
+    // ANCHOR - Iterator Definition
+
+    ///////////////////////////////////////////////////////////////////////////
+    /// \brief
+    ///
+    ///////////////////////////////////////////////////////////////////////////
+    using ConstPointer = ConstIterator;
+    using Pointer = Iterator;
+
     // SECTION - Const Reverse Iterator
 
     ///////////////////////////////////////////////////////////////////////////
@@ -272,6 +296,13 @@ public:
     ///////////////////////////////////////////////////////////////////////////
     struct ConstReverseIterator : public ConstIterator
     {
+    protected:
+        ///////////////////////////////////////////////////////////////////////
+        /// \brief
+        ///
+        ///////////////////////////////////////////////////////////////////////
+        friend struct String;
+
     public:
         // ANCHOR - Constructors
 
@@ -344,6 +375,13 @@ public:
     ///////////////////////////////////////////////////////////////////////////
     struct ReverseIterator : public ConstReverseIterator
     {
+    protected:
+        ///////////////////////////////////////////////////////////////////////
+        /// \brief
+        ///
+        ///////////////////////////////////////////////////////////////////////
+        friend struct String;
+
     public:
         // ANCHOR - Constructors
 
@@ -386,6 +424,15 @@ public:
     };
 
     // !SECTION
+
+    // ANCHOR - Reverse Iterator Definition
+
+    ///////////////////////////////////////////////////////////////////////////
+    /// \brief
+    ///
+    ///////////////////////////////////////////////////////////////////////////
+    using ConstReversePointer = ConstReverseIterator;
+    using ReversePointer = ReverseIterator;
 
 public:
     // ANCHOR - Constructors
@@ -2266,6 +2313,21 @@ axc::String& operator+=(axc::String& lhs, const std::string& rhs);
 axc::String& operator+=(axc::String& lhs, const char* rhs);
 axc::String& operator+=(axc::String& lhs, char rhs);
 
+axc::String operator+(const axc::String& lhs, const axc::String& rhs);
+axc::String operator+(const axc::String& lhs, const std::string& rhs);
+axc::String operator+(const std::string& lhs, const axc::String& rhs);
+axc::String operator+(const axc::String& lhs, const char* rhs);
+axc::String operator+(const char* lhs, const axc::String& rhs);
+axc::String operator+(const axc::String& lhs, char rhs);
+axc::String operator+(char lhs, const axc::String& rhs);
+
+std::ostream& operator<<(std::ostream& lhs, const axc::String& rhs);
+std::ostream& operator>>(std::ostream& lhs, axc::String& rhs);
+
 // !SECTION
+
+// ANCHOR - STD Functions
+
+std::istream& getline(std::istream is, axc::String& str, char delim = '\n');
 
 // !SECTION
