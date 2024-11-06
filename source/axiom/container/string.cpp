@@ -584,7 +584,7 @@ String::operator std::string(void) const
 }
 
 ///////////////////////////////////////////////////////////////////////////////
-String::operator const char *(void) const
+String::operator const char*(void) const
 {
     return (cstr());
 }
