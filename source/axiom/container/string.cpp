@@ -492,3 +492,99 @@ String::String(const ConstIterator first, const ConstIterator second)
 {
     append(first, second);
 }
+
+///////////////////////////////////////////////////////////////////////////////
+String::~String(void)
+{
+    SAFE_DELETE_ARRAY(m_str);
+    m_length = 0;
+    m_capacity = 0;
+    m_increaseBy = 0;
+}
+
+///////////////////////////////////////////////////////////////////////////////
+String& String::operator=(const String& other)
+{
+    if (this != &other)
+    {
+        _setLength(0);
+        _append(other.m_str, other.m_length);
+    }
+    return (*this);
+}
+
+///////////////////////////////////////////////////////////////////////////////
+String& String::operator=(String&& other)
+{
+    if (this != &other)
+    {
+        SAFE_DELETE_ARRAY(m_str);
+        m_str = other.m_str;
+        m_length = other.m_length;
+        m_capacity = other.m_capacity;
+        other.m_str = nullptr;
+        other.m_length = 0;
+        other.m_capacity = 0;
+    }
+    return (*this);
+}
+
+///////////////////////////////////////////////////////////////////////////////
+const char& String::operator[](Uint64 index) const
+{
+    return (*(m_str + index));
+}
+
+///////////////////////////////////////////////////////////////////////////////
+char& String::operator[](Uint64 index)
+{
+    return (*(m_str + index));
+}
+
+///////////////////////////////////////////////////////////////////////////////
+bool String::operator==(const String& rhs)
+{
+    return (_compare(rhs) == 0);
+}
+
+///////////////////////////////////////////////////////////////////////////////
+bool String::operator!=(const String& rhs)
+{
+    return (_compare(rhs) != 0);
+}
+
+///////////////////////////////////////////////////////////////////////////////
+bool String::operator<(const String& rhs)
+{
+    return (_compare(rhs) < 0);
+}
+
+///////////////////////////////////////////////////////////////////////////////
+bool String::operator<=(const String& rhs)
+{
+    return (_compare(rhs) <= 0);
+}
+
+///////////////////////////////////////////////////////////////////////////////
+bool String::operator>(const String& rhs)
+{
+    return (_compare(rhs) > 0);
+}
+
+///////////////////////////////////////////////////////////////////////////////
+bool String::operator>=(const String& rhs)
+{
+    return (_compare(rhs) >= 0);
+}
+
+///////////////////////////////////////////////////////////////////////////////
+String::operator std::string(void) const
+{
+    return (std::string(cstr()));
+}
+
+///////////////////////////////////////////////////////////////////////////////
+String::operator const char *(void) const
+{
+    return (cstr());
+}
