@@ -2092,19 +2092,6 @@ private:
     ///////////////////////////////////////////////////////////////////////////
     /// \brief
     ///
-    /// \param str
-    /// \param position
-    /// \param length
-    ///
-    /// \return
-    ///
-    ///////////////////////////////////////////////////////////////////////////
-    Uint64 _setLength(const String& str, Uint64 position,
-        Uint64 length = npos) const;
-
-    ///////////////////////////////////////////////////////////////////////////
-    /// \brief
-    ///
     /// \param other
     /// \param length
     /// \param position
@@ -2274,7 +2261,14 @@ private:
     ///
     ///////////////////////////////////////////////////////////////////////////
     template<typename F>
-    String& _transform(F function);
+    String& _transform(F function)
+    {
+        for (Uint64 i = 0; i < m_length; i++)
+        {
+            m_str[i] = function(m_str[i]);
+        }
+        return (*this);
+    }
 
 public:
     // ANCHOR - Static Methods
