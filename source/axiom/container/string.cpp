@@ -774,3 +774,99 @@ String& String::append(char ch)
     _append(&ch, 1);
     return (*this);
 }
+
+///////////////////////////////////////////////////////////////////////////////
+String& String::insert(Uint64 position, const String& other)
+{
+    _insertstr(position, other.m_str, other.m_length);
+    return (*this);
+}
+
+///////////////////////////////////////////////////////////////////////////////
+String& String::insert(Uint64 position, const String& other, Uint64 subPos,
+    Uint64 subLen)
+{
+    char* buffer = nullptr;
+
+    subLen = _getLength(other, subPos, subLen);
+    _substr(buffer, other.m_str, subPos, subLen);
+    _insertstr(position, buffer, subLen);
+    SAFE_DELETE(buffer);
+    return (*this);
+}
+
+///////////////////////////////////////////////////////////////////////////////
+String& String::insert(Uint64 position, const std::string& other)
+{
+    _insertstr(position, other.c_str());
+    return (*this);
+}
+
+///////////////////////////////////////////////////////////////////////////////
+String& String::insert(Uint64 position, const char* other)
+{
+    _insertstr(position, other);
+    return (*this);
+}
+
+///////////////////////////////////////////////////////////////////////////////
+String& String::insert(Uint64 position, const char* other, Uint64 length)
+{
+    char* buffer = nullptr;
+
+    _substr(buffer, other, 0, length);
+    _insertstr(position, buffer, length);
+    SAFE_DELETE(buffer);
+    return (*this);
+}
+
+///////////////////////////////////////////////////////////////////////////////
+String& String::insert(Uint64 position, char character)
+{
+    _insertstr(position, &character, 1);
+    return (*this);
+}
+
+///////////////////////////////////////////////////////////////////////////////
+String& String::insert(Uint64 position, Uint64 length, char filler)
+{
+    char* buffer = nullptr;
+
+    _allocCString(buffer, length, filler);
+    _insertstr(position, buffer, length);
+    SAFE_DELETE(buffer);
+    return (*this);
+}
+
+///////////////////////////////////////////////////////////////////////////////
+void String::insert(Iterator pointer, Uint64 length, char filler)
+{
+    char* buffer = nullptr;
+
+    _allocCString(buffer, length, filler);
+    _insertstr(pointer.current.pos, buffer, length);
+    SAFE_DELETE(buffer);
+}
+
+///////////////////////////////////////////////////////////////////////////////
+Iterator String::insert(Iterator pointer, char character)
+{
+    _insertstr(pointer.current.pos, &character, 1);
+    return (pointer);
+}
+
+///////////////////////////////////////////////////////////////////////////////
+void String::insert(Iterator pointer, const ConstIterator first,
+    const ConstIterator second)
+{
+    const Uint64 length = _getLength(first, second);
+
+    if (length == 0)
+    {
+        return;
+    }
+    char* buffer = nullptr;
+    _allocCString(buffer, length, first, second);
+    _insertstr(pointer.current.pos, buffer, length);
+    SAFE_DELETE(buffer);
+}
