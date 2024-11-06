@@ -1227,7 +1227,7 @@ Uint64 String::findLastNotOf(char ch, Uint64 position) const
 }
 
 ///////////////////////////////////////////////////////////////////////////////
-String String::substr(Uint64 position = 0, Uint64 length) const
+String String::substr(Uint64 position, Uint64 length) const
 {
 
 }
