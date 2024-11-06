@@ -29,13 +29,15 @@
 ///////////////////////////////////////////////////////////////////////////////
 #include <axiom/container/string.hpp>
 #include <axiom/container/cstring.hpp>
+#include <axiom/container/char.hpp>
 #include <axiom/utility.hpp>
 
 ///////////////////////////////////////////////////////////////////////////////
-// Forward String and CString from ax::container
+// Forward String, CString and Char from ax::container
 ///////////////////////////////////////////////////////////////////////////////
 using ax::container::String;
 using ax::container::CString;
+using ax::container::Char;
 
 ///////////////////////////////////////////////////////////////////////////////
 // Forward Iterators from ax::container::String
@@ -1105,207 +1107,264 @@ Uint64 String::rfind(char ch, Uint64 position) const
 ///////////////////////////////////////////////////////////////////////////////
 Uint64 String::findFirstOf(const String& other, Uint64 position) const
 {
-
+    return (_findFirstOf(other.m_str, other.m_length, position, true));
 }
 
 ///////////////////////////////////////////////////////////////////////////////
 Uint64 String::findFirstOf(const std::string& other, Uint64 position) const
 {
-
+    return (_findFirstOf(other.c_str(), other.length(), position, true));
 }
 
 ///////////////////////////////////////////////////////////////////////////////
 Uint64 String::findFirstOf(const char* other, Uint64 position) const
 {
-
+    return (_findFirstOf(other, CString::strlen(other), position, true));
 }
 
 ///////////////////////////////////////////////////////////////////////////////
 Uint64 String::findFirstOf(const char* other, Uint64 position,
     Uint64 length) const
 {
-
+    return (_findFirstOf(other, length, position, true));
 }
 
 ///////////////////////////////////////////////////////////////////////////////
 Uint64 String::findFirstOf(char ch, Uint64 position) const
 {
-
+    return (_findFirstOf(&ch, 1, position, true));
 }
 
 ///////////////////////////////////////////////////////////////////////////////
 Uint64 String::findLastOf(const String& other, Uint64 position) const
 {
-
+    return (_findLastOf(other.m_str, other.m_length, position, true));
 }
 
 ///////////////////////////////////////////////////////////////////////////////
 Uint64 String::findLastOf(const std::string& other, Uint64 position) const
 {
-
+    return (_findLastOf(other.c_str(), other.length(), position, true));
 }
 
 ///////////////////////////////////////////////////////////////////////////////
 Uint64 String::findLastOf(const char* other, Uint64 position) const
 {
-
+    return (_findLastOf(other, CString::strlen(other), position, true));
 }
 
 ///////////////////////////////////////////////////////////////////////////////
 Uint64 String::findLastOf(const char* other, Uint64 position,
     Uint64 length) const
 {
-
+    return (_findLastOf(other, length, position, true));
 }
 
 ///////////////////////////////////////////////////////////////////////////////
 Uint64 String::findLastOf(char ch, Uint64 position) const
 {
-
+    return (_findLastOf(&ch, 1, position, true));
 }
 
 ///////////////////////////////////////////////////////////////////////////////
 Uint64 String::findFirstNotOf(const String& other, Uint64 position) const
 {
-
+    return (_findFirstOf(other.m_str, other.m_length, position, false));
 }
 
 ///////////////////////////////////////////////////////////////////////////////
 Uint64 String::findFirstNotOf(const std::string& other, Uint64 position) const
 {
-
+    return (_findFirstOf(other.c_str(), other.length(), position, false));
 }
 
 ///////////////////////////////////////////////////////////////////////////////
 Uint64 String::findFirstNotOf(const char* other, Uint64 position) const
 {
-
+    return (_findFirstOf(other, CString::strlen(other), position, false));
 }
 
 ///////////////////////////////////////////////////////////////////////////////
 Uint64 String::findFirstNotOf(const char* other, Uint64 position,
     Uint64 length) const
 {
-
+    return (_findFirstOf(other, length, position, false));
 }
 
 ///////////////////////////////////////////////////////////////////////////////
 Uint64 String::findFirstNotOf(char ch, Uint64 position) const
 {
-
+    return (_findFirstOf(&ch, 1, position, false));
 }
 
 ///////////////////////////////////////////////////////////////////////////////
 Uint64 String::findLastNotOf(const String& other, Uint64 position) const
 {
-
+    return (_findLastOf(other.m_str, other.m_length, position, false));
 }
 
 ///////////////////////////////////////////////////////////////////////////////
 Uint64 String::findLastNotOf(const std::string& other, Uint64 position) const
 {
-
+    return (_findLastOf(other.c_str(), other.length(), position, false));
 }
 
 ///////////////////////////////////////////////////////////////////////////////
 Uint64 String::findLastNotOf(const char* other, Uint64 position) const
 {
-
+    return (_findLastOf(other, CString::strlen(other), position, false));
 }
 
 ///////////////////////////////////////////////////////////////////////////////
 Uint64 String::findLastNotOf(const char* other, Uint64 position, Uint64 length)
     const
 {
-
+    return (_findLastOf(other, length, position, false));
 }
 
 ///////////////////////////////////////////////////////////////////////////////
 Uint64 String::findLastNotOf(char ch, Uint64 position) const
 {
-
+    return (_findLastOf(&ch, 1, position, false));
 }
 
 ///////////////////////////////////////////////////////////////////////////////
 String String::substr(Uint64 position, Uint64 length) const
 {
+    char* buffer = nullptr;
 
+    length = _getLength(*this, position, length);
+    _substr(buffer, m_str, position, length);
+    String toReturn(buffer);
+    SAFE_DELETE(buffer);
+    return (toReturn);
 }
 
 ///////////////////////////////////////////////////////////////////////////////
 Uint64 String::length(void) const
 {
-
+    return (m_length);
 }
 
 ///////////////////////////////////////////////////////////////////////////////
 inline Uint64 String::size(void) const
 {
-
+    return (length());
 }
 
 ///////////////////////////////////////////////////////////////////////////////
 Uint64 String::maxSize(void) const
 {
-
+    return (npos - 1);
 }
 
 ///////////////////////////////////////////////////////////////////////////////
 void String::resize(Uint64 size)
 {
-
+    if (m_length == size)
+    {
+        return;
+    }
+    if (m_length < size)
+    {
+        _setLength(size);
+        return;
+    }
+    _clearStr(size);
 }
 
 ///////////////////////////////////////////////////////////////////////////////
 void String::resize(Uint64 size, char filler)
 {
-
+    if (m_length == size)
+    {
+        return;
+    }
+    if (m_length < size)
+    {
+        Uint64 position = m_length;
+        _setLength(size);
+        _fillStr(m_str, m_length, position, filler);
+        return;
+    }
+    _clearStr(size);
 }
 
 ///////////////////////////////////////////////////////////////////////////////
 Uint64 String::capacity(void) const
 {
-
+    return (m_capacity);
 }
 
 ///////////////////////////////////////////////////////////////////////////////
-void String::reserve(Uint64 n)
+void String::reserve(Uint64 capacity)
 {
-
+    if (m_capacity == capacity)
+    {
+        return;
+    }
+    if (m_capacity < capacity)
+    {
+        _setCapacity(capacity);
+        return;
+    }
+    if (m_capacity / 2 > m_length)
+    {
+        _decreaseCapacity(m_capacity / 2);
+    }
 }
 
 ///////////////////////////////////////////////////////////////////////////////
 void String::clear(void)
 {
-
+    _clearStr(0);
 }
 
 ///////////////////////////////////////////////////////////////////////////////
 void String::shrinkToFit(void)
 {
-
+    _decreaseCapacity(m_length);
 }
 
 ///////////////////////////////////////////////////////////////////////////////
 String& String::toLowerCase(void)
 {
-
+    return (_transform(Char::toLower));
 }
 
 ///////////////////////////////////////////////////////////////////////////////
 String& String::toUpperCase(void)
 {
-
+    return (_transform(Char::toUpper));
 }
 
 ///////////////////////////////////////////////////////////////////////////////
 String& String::trim(void)
 {
+    Uint64 start = 0;
+    Uint64 end = m_length - 1;
 
+    for (; start < m_length && Char::isSpace(m_str[start]); start++);
+    for (; end && Char::isSpace(m_str[end]); end--);
+
+    if (start > 0 && end < m_length - 1)
+    {
+        Uint64 newSize = end - start + 1;
+        char* newStr = new char[newSize + 1];
+        for (Uint64 i = 0; i < newSize; i++)
+        {
+            newStr[i] = m_str[start + i];
+        }
+        newStr[newSize] = '\0';
+        SAFE_DELETE_ARRAY(m_str);
+        m_str = newStr;
+        m_length = newSize;
+    }
+    return (*this);
 }
 
 ///////////////////////////////////////////////////////////////////////////////
 bool String::isEmpty(void) const
 {
-
+    return (m_length == 0);
 }
