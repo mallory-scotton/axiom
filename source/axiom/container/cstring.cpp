@@ -35,7 +35,7 @@
 using ax::container::CString;
 
 ///////////////////////////////////////////////////////////////////////////////
-int CString::_strlenCompare(Uint64 longword, const char* cp)
+AXIOM_NODISCARD int CString::_strlenCompare(Uint64 longword, const char* cp)
 {
     int max = 4;
 
@@ -54,7 +54,7 @@ int CString::_strlenCompare(Uint64 longword, const char* cp)
 }
 
 ///////////////////////////////////////////////////////////////////////////////
-Uint64 CString::strlen(const char* str)
+AXIOM_NODISCARD Uint64 CString::strlen(const char* str)
 {
     const char* ptr;
     const Uint64* longwordPtr;
@@ -89,6 +89,23 @@ Uint64 CString::strlen(const char* str)
         if (result != -1)
         {
             return (cp - str + result);
+        }
+    }
+}
+
+///////////////////////////////////////////////////////////////////////////////
+AXIOM_NODISCARD int CString::strcmp(const char* lhs, const char* rhs)
+{
+    CHECK(lhs && rhs);
+    for (Uint64 i = 0;; i++)
+    {
+        if (lhs[i] != rhs[i])
+        {
+            return (lhs[i] < rhs[i] ? -1 : 1);
+        }
+        if (lhs[i] == '\0')
+        {
+            return (0);
         }
     }
 }

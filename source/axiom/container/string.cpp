@@ -1368,3 +1368,389 @@ bool String::isEmpty(void) const
 {
     return (m_length == 0);
 }
+
+///////////////////////////////////////////////////////////////////////////////
+inline String::StringIterator String::_ibegin(void) const
+{
+    return (StringIterator(m_str, &m_length, 0));
+}
+
+///////////////////////////////////////////////////////////////////////////////
+inline String::StringIterator String::_rbegin(void) const
+{
+    return (StringIterator(m_str, &m_length, m_length - 1));
+}
+
+///////////////////////////////////////////////////////////////////////////////
+inline String::StringIterator String::_end(void) const
+{
+    return (StringIterator(m_str, &m_length, m_length));
+}
+
+///////////////////////////////////////////////////////////////////////////////
+Uint64 String::_getLength(const String& str, Uint64 position, Uint64 length)
+    const
+{
+    if (length == npos)
+    {
+        length = m_length - position;
+    }
+    CHECK(position + length <= str.m_length);
+    return (length);
+}
+
+///////////////////////////////////////////////////////////////////////////////
+Uint64 String::_getLength(const ConstIterator first,
+    const ConstIterator second)
+{
+    CHECK(first.current.first == second.current.first);
+    CHECK(first.current.pos <= second.current.pos);
+    return (second.current.pos - first.current.pos);
+}
+
+///////////////////////////////////////////////////////////////////////////////
+int String::_compare(const String& other) const
+{
+    if (m_length < other.m_length)
+    {
+        return (1);
+    }
+    if (m_length > other.m_length)
+    {
+        return (-1);
+    }
+    return (CString::strcmp(m_str, other.m_str));
+}
+
+///////////////////////////////////////////////////////////////////////////////
+inline void String::_append(const char* other)
+{
+    return (_append(other, CString::strlen(other)));
+}
+
+///////////////////////////////////////////////////////////////////////////////
+void String::_append(const char* other, Uint64 length)
+{
+    if (!other || length == 0)
+    {
+        return;
+    }
+    _increaseCapacity(m_length + length);
+    Uint64 i = 0;
+    for (; i < length; i++)
+    {
+        operator[](m_length + i) = '\0';
+    }
+    _setLength(m_length + length);
+}
+
+///////////////////////////////////////////////////////////////////////////////
+void String::_insertstr(Uint64 position, const char* other)
+{
+    if (other != nullptr)
+    {
+        _insertstr(position, other, CString::strlen(other));
+    }
+}
+
+///////////////////////////////////////////////////////////////////////////////
+void String::_insertstr(Uint64 position, const char* other, Uint64 length)
+{
+    if (position == m_length)
+    {
+        return (_append(other, length));
+    }
+    CHECK(position <= m_length);
+    if (length == 0)
+    {
+        return;
+    }
+    _increaseCapacity(m_length + length);
+    if (m_str)
+    {
+        char* buffer = nullptr;
+        _substr(buffer, m_str, position, m_length);
+        _clearStr(position);
+        _append(other, length);
+        _append(buffer, CString::strlen(buffer));
+        SAFE_DELETE(buffer);
+    }
+    else
+    {
+        _append(other, length);
+    }
+}
+
+///////////////////////////////////////////////////////////////////////////////
+void String::_substr(char*& buffer, const char* other, Uint64 position,
+    Uint64 length) const
+{
+    CHECK(other != nullptr);
+    _allocCString(buffer, length);
+    for (Uint64 i = 0; i < m_length; i++)
+    {
+        buffer[i] = other[position + i];
+    }
+}
+
+///////////////////////////////////////////////////////////////////////////////
+void String::_erase(Uint64 position, Uint64 length)
+{
+    length = _getLength(*this, position, length);
+    for (Uint64 i = position + length; i < m_length; i++)
+    {
+        operator[](i - length) = operator[](i);
+    }
+    _clearStr(m_length - length);
+}
+
+///////////////////////////////////////////////////////////////////////////////
+void String::_replace(Uint64 position, Uint64 length, const char* other,
+    Uint64 n)
+{
+    char* buffer = nullptr;
+    char* rbuffer = nullptr;
+
+    length = _getLength(*this, position, length);
+    _substr(buffer, m_str, position + length, m_length);
+    _clearStr(position);
+    _substr(rbuffer, other, 0, n);
+    _append(rbuffer);
+    _append(buffer);
+    SAFE_DELETE(buffer);
+    SAFE_DELETE(rbuffer);
+}
+
+///////////////////////////////////////////////////////////////////////////////
+Uint64 String::_find(const char* other, Uint64 length, Uint64 position) const
+{
+    Uint64 toReturn = npos;
+
+    if (position == npos)
+    {
+        position = m_length - 1;
+    }
+    for (; position <= m_length; position++)
+    {
+        if (operator[](position) == *other &&
+            _findCompare(other, length, position))
+        {
+            toReturn = position;
+            break;
+        }
+    }
+    return (toReturn);
+}
+
+///////////////////////////////////////////////////////////////////////////////
+Uint64 String::_rfind(const char* other, Uint64 length, Uint64 position) const
+{
+    Uint64 toReturn = npos;
+
+    if (position == npos || position + length > m_length + 1)
+    {
+        position = m_length - length + 1;
+    }
+    for (Int64 i = (Int64)position; 0 <= i; i--)
+    {
+        if (operator[](i) == *other && _findCompare(other, length, i))
+        {
+            toReturn = i;
+            break;
+        }
+    }
+    return (toReturn);
+}
+
+///////////////////////////////////////////////////////////////////////////////
+bool String::_findCompare(const char* other, Uint64 length, Uint64 position)
+    const
+{
+    for (Uint64 i = 1; i < length; i++)
+    {
+        if (operator[](position + i) != *(other + i))
+        {
+            return (false);
+        }
+    }
+    return (true);
+}
+
+///////////////////////////////////////////////////////////////////////////////
+Uint64 String::_findFirstOf(const char* other, Uint64 length, Uint64 position,
+    bool isTrue) const
+{
+    Uint64 toReturn = npos;
+
+    if (position == npos)
+    {
+        position = m_length - 1;
+    }
+    for (; position < m_length; position++)
+    {
+        if (_findOfCompare(other, length, position, isTrue))
+        {
+            toReturn = position;
+            break;
+        }
+    }
+    return (toReturn);
+}
+
+///////////////////////////////////////////////////////////////////////////////
+Uint64 String::_findLastOf(const char* other, Uint64 length, Uint64 position,
+    bool isTrue) const
+{
+    Uint64 toReturn = npos;
+
+    if (position == npos)
+    {
+        position = m_length - 1;
+    }
+    for (Int64 i = (Int64)position; 0 <= i; i--)
+    {
+        if (_findOfCompare(other, length, i, isTrue))
+        {
+            toReturn = i;
+            break;
+        }
+    }
+    return (toReturn);
+}
+
+///////////////////////////////////////////////////////////////////////////////
+bool String::_findOfCompare(const char* other, Uint64 length, Uint64 position,
+    bool isTrue) const
+{
+    for (Uint64 i = 0; i < length; i++)
+    {
+        if (operator[](position) == *(other + i))
+        {
+            return (isTrue);
+        }
+    }
+    return (false);
+}
+
+///////////////////////////////////////////////////////////////////////////////
+void String::_setLength(const Uint64 length)
+{
+    if (m_length > length)
+    {
+        _clearStr(length);
+    }
+    else if (m_capacity < length)
+    {
+        _increaseCapacity(length);
+    }
+    m_length = length;
+}
+
+///////////////////////////////////////////////////////////////////////////////
+void String::_setCapacity(const Uint64 capacity)
+{
+    if (m_capacity == capacity && m_str)
+    {
+        return;
+    }
+    if (capacity < m_length)
+    {
+        return;
+    }
+    m_capacity = capacity;
+
+    char* buffer = m_str;
+    m_str = nullptr;
+    _allocCString(m_str, m_capacity);
+    if (buffer)
+    {
+        for (Uint64 i = 0; i < m_length; i++)
+        {
+            operator[](i) = buffer[i];
+        }
+        operator[](m_length) = '\0';
+    }
+    SAFE_DELETE(buffer);
+}
+
+///////////////////////////////////////////////////////////////////////////////
+void String::_increaseCapacity(const Uint64 capacity)
+{
+    if (m_capacity > capacity && m_str)
+    {
+        return;
+    }
+    Uint64 n = m_capacity;
+    while (n <= capacity)
+    {
+        n += m_increaseBy;
+    }
+    m_increaseBy++;
+    _setCapacity(n);
+}
+
+///////////////////////////////////////////////////////////////////////////////
+void String::_decreaseCapacity(const Uint64 capacity)
+{
+    if (m_capacity < capacity)
+    {
+        return;
+    }
+    if (m_increaseBy > 15)
+    {
+        m_increaseBy--;
+    }
+    _setCapacity(capacity);
+}
+
+///////////////////////////////////////////////////////////////////////////////
+void String::_allocCString(char*& buffer, const Uint64 size) const
+{
+    CHECK(!buffer);
+    buffer = new char[size + 1]();
+}
+
+///////////////////////////////////////////////////////////////////////////////
+void String::_allocCString(char*& buffer, const Uint64 size, char filler) const
+{
+    _allocCString(buffer, size);
+    _fillStr(buffer, size, 0, filler);
+}
+
+///////////////////////////////////////////////////////////////////////////////
+void String::_allocCString(char*& buffer, const Uint64 size,
+    const ConstIterator first, const ConstIterator second) const
+{
+    _allocCString(buffer, size);
+    ConstIterator begin = first;
+    for (Uint64 i = 0; i < size; i++)
+    {
+        buffer[i] = *begin++;
+    }
+}
+
+///////////////////////////////////////////////////////////////////////////////
+void String::_fillStr(char* other, const Uint64 length, Uint64 position,
+    char filler) const
+{
+    Uint64 begin = position;
+
+    while (begin != length)
+    {
+        other[begin++] = filler;
+    }
+    other[begin] = '\0';
+}
+
+///////////////////////////////////////////////////////////////////////////////
+void String::_clearStr(const Uint64 position)
+{
+    _fillStr(m_str, m_length, position, '\0');
+    m_length = position;
+}
+
+///////////////////////////////////////////////////////////////////////////////
+void String::swap(String& a, String& b)
+{
+    a.swap(b);
+}
