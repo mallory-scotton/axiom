@@ -36,6 +36,9 @@
 #include <axiom/math/types.hpp>
 #include <string>
 #include <iostream>
+#include <utility>
+#include <cstdlib>
+#include <cstring>
 
 ///////////////////////////////////////////////////////////////////////////////
 /// \brief
@@ -1396,12 +1399,13 @@ public:
     /// \brief
     ///
     /// \param position
+    /// \param length
     /// \param other
     ///
     /// \return
     ///
     ///////////////////////////////////////////////////////////////////////////
-    String& replace(Uint64 position, const std::string& other);
+    String& replace(Uint64 position, Uint64 length, const std::string& other);
 
     ///////////////////////////////////////////////////////////////////////////
     /// \brief
@@ -1421,12 +1425,13 @@ public:
     ///
     /// \param position
     /// \param length
+    /// \param n
     /// \param filler
     ///
     /// \return
     ///
     ///////////////////////////////////////////////////////////////////////////
-    String& replace(Uint64 poisition, Uint64 length, char filler);
+    String& replace(Uint64 poisition, Uint64 length, Uint64 n, char filler);
 
     ///////////////////////////////////////////////////////////////////////////
     /// \brief
@@ -1487,13 +1492,13 @@ public:
     /// \brief
     ///
     /// \param str
-    /// \param len
+    /// \param length
     /// \param position
     ///
     /// \return
     ///
     ///////////////////////////////////////////////////////////////////////////
-    Uint64 copy(char* str, Uint64 len, Uint64 position = 0) const;
+    Uint64 copy(char* str, Uint64 length, Uint64 position = 0) const;
 
     // ANCHOR - Research
 

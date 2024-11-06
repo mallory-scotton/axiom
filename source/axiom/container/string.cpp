@@ -28,6 +28,7 @@
 // Headers
 ///////////////////////////////////////////////////////////////////////////////
 #include <axiom/container/string.hpp>
+#include <axiom/utility.hpp>
 
 ///////////////////////////////////////////////////////////////////////////////
 // Forward String from ax::container
@@ -460,7 +461,7 @@ String::String(const String& other, Uint64 position, Uint64 length)
 ///////////////////////////////////////////////////////////////////////////////
 String::String(String&& other)
 {
-    *this = std::move(other);
+    *this = axu::move(other);
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -872,179 +873,231 @@ void String::insert(Iterator pointer, const ConstIterator first,
 }
 
 ///////////////////////////////////////////////////////////////////////////////
+String& String::erase(Uint64 position, Uint64 length)
+{
+    _erase(position, length);
+    return (*this);
+}
+
+///////////////////////////////////////////////////////////////////////////////
 Iterator String::erase(ConstIterator pointer)
 {
-
+    _erase(pointer.current.pos, 1);
+    return (pointer.current);
 }
 
 ///////////////////////////////////////////////////////////////////////////////
 Iterator String::erase(ConstIterator first, ConstIterator second)
 {
-
+    _erase(first.current.pos, _getLength(first, second));
+    return (first.current);
 }
 
 ///////////////////////////////////////////////////////////////////////////////
 String& String::replace(Uint64 position, Uint64 length, const String& other)
 {
-
+    _replace(position, length, other.m_str, other.m_length);
+    return (*this);
 }
 
 ///////////////////////////////////////////////////////////////////////////////
 String& String::replace(ConstIterator first, ConstIterator second,
     const String& other)
 {
-
+    replace(first.current.pos, _getLength(first, second), other.m_str,
+        other.m_length);
+    return (*this);
 }
 
 ///////////////////////////////////////////////////////////////////////////////
 String& String::replace(Uint64 position, Uint64 length, const String& other,
     Uint64 subPos, Uint64 subLen)
 {
+    char* buffer = nullptr;
 
+    subLen = _getLength(other, subPos, subLen);
+    _substr(buffer, other.m_str, subPos, subLen);
+    _replace(position, length, buffer, ::strlen(buffer));
+    SAFE_DELETE(buffer);
+    return (*this);
 }
 
 ///////////////////////////////////////////////////////////////////////////////
 String& String::replace(Uint64 position, Uint64 length, const char* other)
 {
-
+    _replace(position, length, other, ::strlen(other));
+    return (*this);
 }
 
 ///////////////////////////////////////////////////////////////////////////////
 String& String::replace(ConstIterator first, ConstIterator second,
     const char* other)
 {
-
+    _replace(first.current.pos, _getLength(first, second), other,
+        ::strlen(other));
+    return (*this);
 }
 
 ///////////////////////////////////////////////////////////////////////////////
 String& String::replace(Uint64 position, Uint64 length, const char* other,
     Uint64 n)
 {
-
+    _replace(position, length, other, n);
+    return (*this);
 }
 
 ///////////////////////////////////////////////////////////////////////////////
 String& String::replace(ConstIterator first, ConstIterator second,
     const char* other, Uint64 n)
 {
-
+    _replace(first.current.pos, _getLength(first, second), other, n);
+    return (*this);
 }
 
 ///////////////////////////////////////////////////////////////////////////////
-String& String::replace(Uint64 position, const std::string& other)
+String& String::replace(Uint64 position, Uint64 length,
+    const std::string& other)
 {
-
+    _replace(position, length, other.c_str(), other.length());
+    return (*this);
 }
 
 ///////////////////////////////////////////////////////////////////////////////
 String& String::replace(ConstIterator first, ConstIterator second,
     const std::string& other)
 {
-
+    _replace(first.current.pos, _getLength(first, second), other.c_str(),
+        other.length());
+    return (*this);
 }
 
 ///////////////////////////////////////////////////////////////////////////////
-String& String::replace(Uint64 poisition, Uint64 length, char filler)
+String& String::replace(Uint64 poisition, Uint64 length, Uint64 n, char filler)
 {
+    char* buffer = nullptr;
 
+    _allocCString(buffer, n, filler);
+    _replace(poisition, length, buffer, n);
+    SAFE_DELETE(buffer);
+    return (*this);
 }
 
 ///////////////////////////////////////////////////////////////////////////////
 String& String::replace(ConstIterator first, ConstIterator second,
     Uint64 length, char filler)
 {
+    char* buffer = nullptr;
 
+    _allocCString(buffer, length, filler);
+    _replace(first.current.pos, _getLength(first, second), buffer, length);
+    SAFE_DELETE(buffer);
+    return (*this);
 }
 
 ///////////////////////////////////////////////////////////////////////////////
 String& String::replace(ConstIterator first, ConstIterator second,
     ConstIterator third, ConstIterator four)
 {
+    const Uint64 length = _getLength(third, four);
+    char* buffer = nullptr;
 
+    _allocCString(buffer, length, third, four);
+    _replace(first.current.pos, _getLength(first, second), buffer, length);
+    SAFE_DELETE(buffer);
+    return (*this);
 }
 
 ///////////////////////////////////////////////////////////////////////////////
 void String::swap(String& other)
 {
-
+    String temp = axu::move(*this);
+    *this = axu::move(other);
+    other = axu::move(temp);
 }
 
 ///////////////////////////////////////////////////////////////////////////////
 String& String::popBack(void)
 {
-
+    _erase((end() - 1).current.pos, 1);
+    return (*this);
 }
 
 ///////////////////////////////////////////////////////////////////////////////
 const char* String::cstr(void) const
 {
-
+    return (m_str);
 }
 
 ///////////////////////////////////////////////////////////////////////////////
-Uint64 String::copy(char* str, Uint64 len, Uint64 position) const
+Uint64 String::copy(char* str, Uint64 length, Uint64 position) const
 {
-
+    CHECK(str);
+    length = _getLength(*this, position, length);
+    for (Uint64 i = 0; i < length; ++i)
+    {
+        *(str + i) = operator[](position + i);
+    }
+    return (length);
 }
 
 ///////////////////////////////////////////////////////////////////////////////
 Uint64 String::find(const String& other, Uint64 position) const
 {
-
+    return (_find(other.m_str, other.m_length, position));
 }
 
 ///////////////////////////////////////////////////////////////////////////////
 Uint64 String::find(const std::string& other, Uint64 position) const
 {
-
+    return (_find(other.c_str(), other.length(), position));
 }
 
 ///////////////////////////////////////////////////////////////////////////////
 Uint64 String::find(const char* other, Uint64 position) const
 {
-
+    return (_find(other, ::strlen(other), position));
 }
 
 ///////////////////////////////////////////////////////////////////////////////
 Uint64 String::find(const char* other, Uint64 position, Uint64 length) const
 {
-
+    return (_find(other, length, position));
 }
 
 ///////////////////////////////////////////////////////////////////////////////
 Uint64 String::find(char ch, Uint64 position) const
 {
-
+    return (_find(&ch, 1, position));
 }
 
 ///////////////////////////////////////////////////////////////////////////////
 Uint64 String::rfind(const String& other, Uint64 position) const
 {
-
+    return (_rfind(other.m_str, other.m_length, position));
 }
 
 ///////////////////////////////////////////////////////////////////////////////
 Uint64 String::rfind(const std::string& other, Uint64 position) const
 {
-
+    return (_rfind(other.c_str(), other.length(), position));
 }
 
 ///////////////////////////////////////////////////////////////////////////////
 Uint64 String::rfind(const char* other, Uint64 position) const
 {
-
+    return (_rfind(other, ::strlen(other), position));
 }
 
 ///////////////////////////////////////////////////////////////////////////////
 Uint64 String::rfind(const char* other, Uint64 position, Uint64 length) const
 {
-
+    return (_rfind(other, length, position));
 }
 
 ///////////////////////////////////////////////////////////////////////////////
 Uint64 String::rfind(char ch, Uint64 position) const
 {
-
+    return (_rfind(&ch, 1, position));
 }
 
 ///////////////////////////////////////////////////////////////////////////////
