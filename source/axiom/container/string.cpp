@@ -247,3 +247,68 @@ Iterator Iterator::operator--(int)
     m_myBase::_decrement();
     return (old);
 }
+
+///////////////////////////////////////////////////////////////////////////////
+ConstReverseIterator::ConstReverseIterator(void) : m_myBase() {}
+
+///////////////////////////////////////////////////////////////////////////////
+ConstReverseIterator::ConstReverseIterator(String::StringIterator iterator)
+    : m_myBase(iterator) {}
+
+///////////////////////////////////////////////////////////////////////////////
+const char& ConstReverseIterator::operator[](Uint64 index) const
+{
+    return (m_myBase::operator[](index));
+}
+
+///////////////////////////////////////////////////////////////////////////////
+const char& ConstReverseIterator::operator*(void) const
+{
+    return (m_myBase::operator*());
+}
+
+///////////////////////////////////////////////////////////////////////////////
+ConstReverseIterator ConstReverseIterator::operator+(Uint64 rhs)
+{
+    ConstReverseIterator toReturn;
+    _add(toReturn, rhs);
+    return (toReturn);
+}
+
+///////////////////////////////////////////////////////////////////////////////
+ConstReverseIterator ConstReverseIterator::operator-(Uint64 rhs)
+{
+    ConstReverseIterator toReturn;
+    _subtract(toReturn, rhs);
+    return (toReturn);
+}
+
+///////////////////////////////////////////////////////////////////////////////
+ConstReverseIterator& ConstReverseIterator::operator++(void)
+{
+    _increment();
+    return (*this);
+}
+
+///////////////////////////////////////////////////////////////////////////////
+ConstReverseIterator ConstReverseIterator::operator++(int)
+{
+    ConstReverseIterator old = *this;
+    _increment();
+    return (old);
+}
+
+///////////////////////////////////////////////////////////////////////////////
+ConstReverseIterator& ConstReverseIterator::operator--(void)
+{
+    _decrement();
+    return (*this);
+}
+
+///////////////////////////////////////////////////////////////////////////////
+ConstReverseIterator ConstReverseIterator::operator--(int)
+{
+    ConstReverseIterator old = *this;
+    _decrement();
+    return (old);
+}
