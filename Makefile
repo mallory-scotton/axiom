@@ -59,12 +59,17 @@ NO_VISUAL         = 0
 # File extension
 EXTENSION         = .cpp
 
+SRC_CONTAINER     = ./source/axiom/container/char.cpp \
+                    ./source/axiom/container/cstring.cpp \
+                    ./source/axiom/container/string.cpp
+
 SRC_MATH          = ./source/axiom/math/vector2.cpp \
                     ./source/axiom/math/vector3.cpp
 
 SRC_GRAPHICS      = ./source/axiom/graphics/shader.cpp
 
-SOURCES           = $(SRC_MATH) \
+SOURCES           = $(SRC_CONTAINER) \
+                    $(SRC_MATH) \
                     $(SRC_GRAPHICS)
 
 ###############################################################################
