@@ -64,7 +64,8 @@ SRC_CONTAINER     = ./source/axiom/container/char.cpp \
                     ./source/axiom/container/string.cpp
 
 SRC_MATH          = ./source/axiom/math/vector2.cpp \
-                    ./source/axiom/math/vector3.cpp
+                    ./source/axiom/math/vector3.cpp \
+                    ./source/axiom/math/utilities.cpp
 
 SRC_GRAPHICS      = ./source/axiom/graphics/shader.cpp
 
