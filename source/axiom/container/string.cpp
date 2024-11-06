@@ -421,7 +421,7 @@ ReverseIterator& ReverseIterator::operator++(void)
 }
 
 ///////////////////////////////////////////////////////////////////////////////
-ReverseIterator& ReverseIterator::operator++(void)
+ReverseIterator ReverseIterator::operator++(int)
 {
     ReverseIterator old = *this;
     m_myBase::_increment();
@@ -436,7 +436,7 @@ ReverseIterator& ReverseIterator::operator--(void)
 }
 
 ///////////////////////////////////////////////////////////////////////////////
-ReverseIterator& ReverseIterator::operator--(void)
+ReverseIterator ReverseIterator::operator--(int)
 {
     ReverseIterator old = *this;
     m_myBase::_decrement();
