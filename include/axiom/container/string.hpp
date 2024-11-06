@@ -2224,11 +2224,10 @@ private:
     /// \param buffer
     /// \param size
     /// \param first
-    /// \param second
     ///
     ///////////////////////////////////////////////////////////////////////////
     void _allocCString(char*& buffer, const Uint64 size,
-        const ConstIterator first, const ConstIterator second) const;
+        const ConstIterator first) const;
 
     ///////////////////////////////////////////////////////////////////////////
     /// \brief

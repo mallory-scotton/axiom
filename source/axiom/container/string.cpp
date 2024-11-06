@@ -766,7 +766,7 @@ String& String::append(const ConstIterator first, const ConstIterator second)
     if (length != 0)
     {
         char* buffer = nullptr;
-        _allocCString(buffer, length, first, second);
+        _allocCString(buffer, length, first);
         _append(buffer, length);
         SAFE_DELETE(buffer);
     }
@@ -871,7 +871,7 @@ void String::insert(Iterator pointer, const ConstIterator first,
         return;
     }
     char* buffer = nullptr;
-    _allocCString(buffer, length, first, second);
+    _allocCString(buffer, length, first);
     _insertstr(pointer.current.pos, buffer, length);
     SAFE_DELETE(buffer);
 }
@@ -1005,7 +1005,7 @@ String& String::replace(ConstIterator first, ConstIterator second,
     const Uint64 length = _getLength(third, four);
     char* buffer = nullptr;
 
-    _allocCString(buffer, length, third, four);
+    _allocCString(buffer, length, third);
     _replace(first.current.pos, _getLength(first, second), buffer, length);
     SAFE_DELETE(buffer);
     return (*this);
@@ -1719,7 +1719,7 @@ void String::_allocCString(char*& buffer, const Uint64 size, char filler) const
 
 ///////////////////////////////////////////////////////////////////////////////
 void String::_allocCString(char*& buffer, const Uint64 size,
-    const ConstIterator first, const ConstIterator second) const
+    const ConstIterator first) const
 {
     _allocCString(buffer, size);
     ConstIterator begin = first;
