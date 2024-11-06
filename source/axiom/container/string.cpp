@@ -28,12 +28,14 @@
 // Headers
 ///////////////////////////////////////////////////////////////////////////////
 #include <axiom/container/string.hpp>
+#include <axiom/container/cstring.hpp>
 #include <axiom/utility.hpp>
 
 ///////////////////////////////////////////////////////////////////////////////
-// Forward String from ax::container
+// Forward String and CString from ax::container
 ///////////////////////////////////////////////////////////////////////////////
 using ax::container::String;
+using ax::container::CString;
 
 ///////////////////////////////////////////////////////////////////////////////
 // Forward Iterators from ax::container::String
@@ -917,7 +919,7 @@ String& String::replace(Uint64 position, Uint64 length, const String& other,
 
     subLen = _getLength(other, subPos, subLen);
     _substr(buffer, other.m_str, subPos, subLen);
-    _replace(position, length, buffer, ::strlen(buffer));
+    _replace(position, length, buffer, CString::strlen(buffer));
     SAFE_DELETE(buffer);
     return (*this);
 }
@@ -925,7 +927,7 @@ String& String::replace(Uint64 position, Uint64 length, const String& other,
 ///////////////////////////////////////////////////////////////////////////////
 String& String::replace(Uint64 position, Uint64 length, const char* other)
 {
-    _replace(position, length, other, ::strlen(other));
+    _replace(position, length, other, CString::strlen(other));
     return (*this);
 }
 
@@ -934,7 +936,7 @@ String& String::replace(ConstIterator first, ConstIterator second,
     const char* other)
 {
     _replace(first.current.pos, _getLength(first, second), other,
-        ::strlen(other));
+        CString::strlen(other));
     return (*this);
 }
 
@@ -1055,7 +1057,7 @@ Uint64 String::find(const std::string& other, Uint64 position) const
 ///////////////////////////////////////////////////////////////////////////////
 Uint64 String::find(const char* other, Uint64 position) const
 {
-    return (_find(other, ::strlen(other), position));
+    return (_find(other, CString::strlen(other), position));
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -1085,7 +1087,7 @@ Uint64 String::rfind(const std::string& other, Uint64 position) const
 ///////////////////////////////////////////////////////////////////////////////
 Uint64 String::rfind(const char* other, Uint64 position) const
 {
-    return (_rfind(other, ::strlen(other), position));
+    return (_rfind(other, CString::strlen(other), position));
 }
 
 ///////////////////////////////////////////////////////////////////////////////
