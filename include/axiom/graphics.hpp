@@ -33,6 +33,7 @@
 // Headers
 ///////////////////////////////////////////////////////////////////////////////
 #include <axiom/graphics/dependencies.hpp>
+#include <axiom/graphics/camera.hpp>
 #include <axiom/graphics/forwards.hpp>
 #include <axiom/graphics/shader.hpp>
 
