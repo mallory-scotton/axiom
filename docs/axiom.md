@@ -11,3 +11,4 @@
 |[Math](./axiom/math.md)            |...                                      |
 |[Graphics](./axiom/graphics.md)    |...                                      |
 |[Container](./axiom/container.md)  |...                                      |
+|[Utility](./axiom/utility.md)      |...                                      |
