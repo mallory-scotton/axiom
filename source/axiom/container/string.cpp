@@ -360,3 +360,80 @@ void ConstReverseIterator::_subtract(ConstReverseIterator& toReturn,
     toReturn = *this;
     toReturn.current.pos += subtraction;
 }
+
+///////////////////////////////////////////////////////////////////////////////
+ReverseIterator::ReverseIterator(void) : m_myBase() {}
+
+///////////////////////////////////////////////////////////////////////////////
+ReverseIterator::ReverseIterator(String::StringIterator iterator)
+    : m_myBase(iterator) {}
+
+///////////////////////////////////////////////////////////////////////////////
+char& ReverseIterator::operator[](Uint64 index)
+{
+    return (m_myBase::_randomAccess(index));
+}
+
+///////////////////////////////////////////////////////////////////////////////
+const char& ReverseIterator::operator[](Uint64 index) const
+{
+    return (m_myBase::operator[](index));
+}
+
+///////////////////////////////////////////////////////////////////////////////
+char& ReverseIterator::operator*(void)
+{
+    return (m_myBase::retrieve());
+}
+
+///////////////////////////////////////////////////////////////////////////////
+const char& ReverseIterator::operator*(void) const
+{
+    return (m_myBase::operator*());
+}
+
+///////////////////////////////////////////////////////////////////////////////
+ReverseIterator ReverseIterator::operator+(Uint64 rhs)
+{
+    ReverseIterator toReturn;
+    m_myBase::_add(toReturn, rhs);
+    return (toReturn);
+}
+
+///////////////////////////////////////////////////////////////////////////////
+ReverseIterator ReverseIterator::operator-(Uint64 rhs)
+{
+    ReverseIterator toReturn;
+    m_myBase::_subtract(toReturn, rhs);
+    return (toReturn);
+}
+
+///////////////////////////////////////////////////////////////////////////////
+ReverseIterator& ReverseIterator::operator++(void)
+{
+    m_myBase::_increment();
+    return (*this);
+}
+
+///////////////////////////////////////////////////////////////////////////////
+ReverseIterator& ReverseIterator::operator++(void)
+{
+    ReverseIterator old = *this;
+    m_myBase::_increment();
+    return (old);
+}
+
+///////////////////////////////////////////////////////////////////////////////
+ReverseIterator& ReverseIterator::operator--(void)
+{
+    m_myBase::_decrement();
+    return (*this);
+}
+
+///////////////////////////////////////////////////////////////////////////////
+ReverseIterator& ReverseIterator::operator--(void)
+{
+    ReverseIterator old = *this;
+    m_myBase::_decrement();
+    return (old);
+}
