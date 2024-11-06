@@ -1439,8 +1439,9 @@ void String::_append(const char* other, Uint64 length)
     Uint64 i = 0;
     for (; i < length; i++)
     {
-        operator[](m_length + i) = '\0';
+        operator[](m_length + i) = other[i];
     }
+    operator[](m_length + i) = '\0';
     _setLength(m_length + length);
 }
 
