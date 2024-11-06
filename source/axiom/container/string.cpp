@@ -312,3 +312,51 @@ ConstReverseIterator ConstReverseIterator::operator--(int)
     _decrement();
     return (old);
 }
+
+///////////////////////////////////////////////////////////////////////////////
+void ConstReverseIterator::_increment(void)
+{
+    if (m_myBase::current.pos == 0)
+    {
+        m_myBase::current.pos = *m_myBase::current.size;
+        return;
+    }
+    CHECK(current.pos != *current.size);
+    m_myBase::_decrement();
+}
+
+///////////////////////////////////////////////////////////////////////////////
+void ConstReverseIterator::_decrement(void)
+{
+    if (current.pos == *m_myBase::current.size)
+    {
+        m_myBase::current.pos = 0;
+        return;
+    }
+    CHECK(current.pos + 1 != *m_myBase::current.size);
+    m_myBase::_increment();
+}
+
+///////////////////////////////////////////////////////////////////////////////
+void ConstReverseIterator::_add(ConstReverseIterator& toReturn,
+    Uint64 addition)
+{
+    CHECK(current.pos != *m_myBase::current.size && addition);
+    if (current.pos == addition - 1)
+    {
+        m_myBase::current.pos = *m_myBase::current.size;
+        return;
+    }
+    CHECK(current.pos >= addition - 1);
+    toReturn = *this;
+    toReturn.current.pos -= addition;
+}
+
+///////////////////////////////////////////////////////////////////////////////
+void ConstReverseIterator::_subtract(ConstReverseIterator& toReturn,
+    Uint64 subtraction)
+{
+    CHECK(*m_myBase::current.size > m_myBase::current.pos + subtraction);
+    toReturn = *this;
+    toReturn.current.pos += subtraction;
+}
