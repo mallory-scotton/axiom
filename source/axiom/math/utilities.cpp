@@ -50,7 +50,9 @@ AXIOM_NODISCARD double axm::sqrt(double x)
 
 ///////////////////////////////////////////////////////////////////////////////
 AXIOM_NODISCARD float axm::invSqrt(float x)
-{}
+{
+    return (1.f / axm::sqrt(x));
+}
 
 ///////////////////////////////////////////////////////////////////////////////
 AXIOM_NODISCARD double axm::invSqrt(double x)
@@ -80,6 +82,12 @@ AXIOM_NODISCARD float axm::radiansToDegrees(float radians)
 AXIOM_NODISCARD double axm::radiansToDegrees(double radians)
 {
     return (radians * (180.0 / DOUBLE_PI));
+}
+
+///////////////////////////////////////////////////////////////////////////////
+AXIOM_NODISCARD float axm::degreesToRadians(float degrees)
+{
+    return (degrees * (PI / 180.f));
 }
 
 ///////////////////////////////////////////////////////////////////////////////
