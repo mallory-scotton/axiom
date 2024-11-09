@@ -1,3 +1,12 @@
+# Ignore all
+*
+
+# Unignore all with extensions
+!*.*
+
+# Unigore all dirs
+!*/
+
 # Builded objects
 build/
 *.d
@@ -13,3 +22,13 @@ build/
 # IDE related folders
 .idea/
 .vscode/
+
+# Ignore root tests files
+/*.cpp
+/*.hpp
+/*.inl
+/*.h
+/*.c
+
+# Unignore Makefile
+!Makefile
